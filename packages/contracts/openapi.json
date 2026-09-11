@@ -1,0 +1,204 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EduQuery AI Institutional API",
+    "description": "Versioned shared contracts for natural language academic analytics and predictive intelligence. All processing runs inside the institution behind an approved HTTPS/VPN gateway.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Muhammad Junaid (Project Lead)",
+      "email": "junaid@eduquery.ai"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api-inst.eduquery.internal/api/v1",
+      "description": "Approved Institution-Hosted Production Backend"
+    },
+    {
+      "url": "http://127.0.0.1:8000/api/v1",
+      "description": "Local Institutional Development Gateway"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Service Health Check",
+        "description": "Returns operational status of FastAPI, database connectivity, and local RAG indexes.",
+        "operationId": "getHealthStatus",
+        "responses": {
+          "200": {
+            "description": "Service is healthy and ready to accept requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "service", "timestamp"],
+                  "properties": {
+                    "status": { "type": "string", "example": "healthy" },
+                    "service": { "type": "string", "example": "EduQuery-AI-FastAPI" },
+                    "version": { "type": "string", "example": "1.0.0" },
+                    "timestamp": { "type": "string", "format": "date-time", "example": "2026-08-03T12:00:00Z" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/query": {
+      "post": {
+        "summary": "Process Natural Language Analytics Query",
+        "description": "Receives an English prompt, validates intent against local RAG/Wren MDL, executes read-only SQL Server query, and returns answer summary, table, chart config, and evidence metadata.",
+        "operationId": "processQuery",
+        "security": [
+          { "InstitutionalAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./schemas/query_request.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Query successfully processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/query_response.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or unsafe query rejected",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Campus scope or role authorization denied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal dependency failure or timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/prediction": {
+      "post": {
+        "summary": "Generate Student Risk & Academic Performance Prediction",
+        "description": "Evaluates student feature transforms against temporal-split model artifacts (AutoGluon/TabPFN) and returns risk score, SHAP attributions, and advisory disclaimer.",
+        "operationId": "processPrediction",
+        "security": [
+          { "InstitutionalAuth": [] }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./schemas/prediction_request.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prediction generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/prediction_response.json"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid target identifier or input parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized access to target campus entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Prediction pipeline or feature extraction error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./schemas/error_response.json"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "InstitutionalAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Institutional JWT token containing user identity and verified campus entitlements."
+      }
+    }
+  }
+}

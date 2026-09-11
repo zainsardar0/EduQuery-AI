@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/auth_context.json",
+  "title": "AuthContext",
+  "type": "object",
+  "description": "Server-derived authentication and authorization context. Computed exclusively on the institutional backend from verified JWT/session claims. Never trusted from client-supplied payload parameters.",
+  "required": [
+    "user_id",
+    "role",
+    "campus_scope",
+    "authenticated_at",
+    "session_expires_at"
+  ],
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the authenticated user",
+      "example": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+    },
+    "role": {
+      "type": "string",
+      "enum": ["admin", "principal", "teacher", "counselor", "auditor"],
+      "description": "Server-assigned institutional role governing feature and data access level",
+      "example": "teacher"
+    },
+    "campus_scope": {
+      "type": "array",
+      "description": "List of campus codes (SCHOOL) the user is authorized to access. Empty array means cross-campus access is denied.",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{4}$",
+        "example": "MNWB"
+      },
+      "minItems": 1,
+      "example": ["MNWB", "MNWG"]
+    },
+    "teacher_eid": {
+      "type": "integer",
+      "description": "Optional Employee ID (EID) if the user is a teacher, used for automatic row-level scope injection",
+      "example": 1042
+    },
+    "authenticated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of authentication verification",
+      "example": "2026-08-03T12:00:00Z"
+    },
+    "session_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of token/session expiration",
+      "example": "2026-08-03T20:00:00Z"
+    }
+  },
+  "additionalProperties": false
+}

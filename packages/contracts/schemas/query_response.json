@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/query_response.json",
+  "title": "QueryResponse",
+  "type": "object",
+  "description": "Response payload returned for NL2SQL queries, containing formatted text answer, tabular data, chart visualization config, and evidence metadata.",
+  "required": [
+    "success",
+    "answer",
+    "data_table",
+    "chart_config",
+    "evidence",
+    "request_id"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true,
+      "description": "Always true for successful responses"
+    },
+    "answer": {
+      "type": "string",
+      "description": "Formatted natural language summary answering the user's prompt",
+      "example": "In 2026 at MNWB campus, Class 10 achieved an overall pass rate of 88.5% across internal exams, with Mathematics leading at 92.0%."
+    },
+    "data_table": {
+      "type": "object",
+      "description": "Sanitized tabular result dataset for rendering in UI data grids",
+      "required": ["columns", "rows", "total_rows"],
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "label", "data_type"],
+            "properties": {
+              "key": { "type": "string", "example": "SUBJECTNAME" },
+              "label": { "type": "string", "example": "Subject" },
+              "data_type": { "type": "string", "enum": ["string", "number", "percentage", "date", "boolean"], "example": "percentage" }
+            }
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": ["string", "number", "boolean", "null"]
+            }
+          },
+          "example": [
+            { "SUBJECTNAME": "Mathematics", "PASS_PERCENTAGE": 92.0, "TOTAL_STUDENTS": 150 },
+            { "SUBJECTNAME": "English", "PASS_PERCENTAGE": 85.0, "TOTAL_STUDENTS": 150 }
+          ]
+        },
+        "total_rows": {
+          "type": "integer",
+          "minimum": 0,
+          "example": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "chart_config": {
+      "type": "object",
+      "description": "Recommended chart visualization properties for rendering UI graphics",
+      "required": ["chart_type", "x_axis_key", "y_axis_keys", "title"],
+      "properties": {
+        "chart_type": {
+          "type": "string",
+          "enum": ["bar", "line", "pie", "kpi_card", "table_only"],
+          "example": "bar"
+        },
+        "title": {
+          "type": "string",
+          "example": "Class 10 Pass Rate by Subject — MNWB (2026)"
+        },
+        "x_axis_key": {
+          "type": "string",
+          "example": "SUBJECTNAME"
+        },
+        "y_axis_keys": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["PASS_PERCENTAGE"]
+        },
+        "color_palette": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["#1E40AF", "#3B82F6"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "description": "Sanitized metadata proving query provenance and institutional audit compliance",
+      "required": [
+        "intent_category",
+        "tables_queried",
+        "campus_applied",
+        "execution_time_ms",
+        "rag_sources_used"
+      ],
+      "properties": {
+        "intent_category": {
+          "type": "string",
+          "example": "Class/Section Aggregates"
+        },
+        "tables_queried": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["vw_CONSOLIDATED_ACCURATE", "STUDENTS_ROLL_INTERNAL_EXAM"]
+        },
+        "campus_applied": {
+          "type": "string",
+          "example": "MNWB"
+        },
+        "execution_time_ms": {
+          "type": "number",
+          "example": 142.5
+        },
+        "rag_sources_used": {
+          "type": "array",
+          "items": { "type": "string" },
+          "example": ["master_schema.md#vw_CONSOLIDATED_ACCURATE", "canonical_glossary.json#PASS_RATE"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "example": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d"
+    }
+  },
+  "additionalProperties": false
+}

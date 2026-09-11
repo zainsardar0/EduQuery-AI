@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/prediction_response.json",
+  "title": "PredictionResponse",
+  "type": "object",
+  "description": "Prediction payload containing risk classification score, selected model metadata, SHAP feature attributions, and advisory decision-support disclaimer.",
+  "required": [
+    "success",
+    "target_id",
+    "risk_level",
+    "predicted_score",
+    "model_metadata",
+    "feature_attributions",
+    "disclaimer",
+    "request_id"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": true
+    },
+    "target_id": {
+      "type": "string",
+      "example": "SYN_1001"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+      "description": "Advisory risk tier category",
+      "example": "HIGH"
+    },
+    "predicted_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 100.0,
+      "description": "Predicted annual board percentage score",
+      "example": 42.5
+    },
+    "confidence_interval": {
+      "type": "object",
+      "required": ["lower_bound", "upper_bound"],
+      "properties": {
+        "lower_bound": { "type": "number", "example": 38.0 },
+        "upper_bound": { "type": "number", "example": 47.0 }
+      },
+      "additionalProperties": false
+    },
+    "model_metadata": {
+      "type": "object",
+      "required": [
+        "model_name",
+        "model_version",
+        "mlflow_run_id",
+        "evaluated_at"
+      ],
+      "properties": {
+        "model_name": { "type": "string", "example": "AutoGluon_WeightedEnsemble_L2" },
+        "model_version": { "type": "string", "example": "1.0.0-temporal-split" },
+        "mlflow_run_id": { "type": "string", "example": "run_20260803_autogluon_01" },
+        "evaluated_at": { "type": "string", "format": "date-time", "example": "2026-08-03T12:00:00Z" }
+      },
+      "additionalProperties": false
+    },
+    "feature_attributions": {
+      "type": "array",
+      "description": "Top SHAP feature attributions explaining the primary drivers of the prediction score",
+      "items": {
+        "type": "object",
+        "required": ["feature_name", "display_name", "shap_value", "impact_direction"],
+        "properties": {
+          "feature_name": { "type": "string", "example": "mid_dec_math_marks" },
+          "display_name": { "type": "string", "example": "Mid-Dec Math Marks" },
+          "shap_value": { "type": "number", "example": -12.4 },
+          "impact_direction": { "type": "string", "enum": ["INCREASES_RISK", "DECREASES_RISK"], "example": "INCREASES_RISK" },
+          "value_observed": { "type": ["string", "number"], "example": 28.0 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "disclaimer": {
+      "type": "string",
+      "description": "Mandatory institutional advisory disclaimer text",
+      "const": "ADVISORY NOTICE: Model predictions and SHAP attributions are decision-support indicators intended to assist educators and academic counselors. They do not constitute final academic determinations, disciplinary decisions, or automated grading actions."
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "example": "c3b2a109-8765-4321-fedc-ba9876543210"
+    }
+  },
+  "additionalProperties": false
+}
