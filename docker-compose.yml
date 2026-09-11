@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  eduquery-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eduquery-ai-container
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=demo
+      - FORCE_DEMO_FALLBACK=true
+    restart: unless-stopped
