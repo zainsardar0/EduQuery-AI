@@ -1,0 +1,71 @@
+# Python cache and environment
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+*.log
+.env
+catboost_info/
+*.Rhistory
+node_modules/
+
+# Local Codex second brain - never commit
+.codex-brain/
+.codex/
+.codex-memory/
+.codex-project.json
+.obsidian/
+.graphifyignore
+GRAPHIFY-INTEGRATION.md
+00_System/
+10_Sources/
+20_Facts/
+30_Decisions/
+40_Assumptions/
+50_Lessons/
+60_Tasks/
+90_Graphify/
+.tools/graphify-venv/
+graphify-out/
+
+# Unfinished local work only
+_draft/
+services/api/logs/
+
+# Protected local Daanish School data: never stage, commit, or distribute from this repository.
+/data/ml_features_dataset_clean.csv
+/data/sanitized_database.db*
+/data/original_database/
+/data/policy_rag_markdown*/
+/data/gold_prompts/
+
+# Ignore raw data and database backups
+/data/extracted_db/
+/data/ml/
+*.bak
+*.zip
+
+# Ignore MLflow databases and datasets
+/ml/features/
+/ml/mlruns/
+/mlruns/
+
+# Globally ignore all raw dataset formats
+*.csv
+*.parquet
+*.sqlite
+*.db
+
+# Globally ignore all ML model binaries
+*.pkl
+*.joblib
+*.h5
+*.onnx
+*.pb
+*.pt
+*.pth

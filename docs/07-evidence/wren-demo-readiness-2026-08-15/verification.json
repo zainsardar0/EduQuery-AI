@@ -1,0 +1,85 @@
+{
+  "date": "2026-08-15",
+  "verdict": {
+    "local_demo_ready": true,
+    "institutional_production_ready": false,
+    "policy_rag_release_eligible": false,
+    "external_model_enabled": false
+  },
+  "database": {
+    "restore_database": "EduQuery_Wren_20260713",
+    "updateability": "READ_ONLY",
+    "backup_sha256": "CC4206255E8BA81DA3F688AC6B3BF3260773910807DE30BD4B91FA45C5903714",
+    "backup_finish": "2026-07-13T21:00:20",
+    "tables": 69,
+    "views": 68,
+    "heap_or_clustered_rows": 1997113
+  },
+  "wren": {
+    "runtime": "wrenai-0.13.2",
+    "strict_mode": true,
+    "model_count": 5,
+    "external_raw_prompt_egress": false
+  },
+  "policy_rag": {
+    "active_source_format": "markdown",
+    "active_source_count": 9,
+    "active_chunk_count": 144,
+    "mechanics_candidate_cases": 9,
+    "source_artifact_recall_at_3": 1.0,
+    "source_citations": "Markdown line ranges; declared page markers only",
+    "release_eligible": false
+  },
+  "tests": {
+    "full_suite_passed": 296,
+    "full_suite_failed": 0,
+    "human_query_cases": 100,
+    "human_query_live_sql_cases": 80,
+    "human_query_external_calls": 0,
+    "human_query_p95_ms": 500.91,
+    "stress_requests": 100,
+    "stress_workers": 16,
+    "stress_failures": 0,
+    "stress_p50_ms": 200.08,
+    "stress_p95_ms": 443.70,
+    "stress_max_ms": 545.58
+  },
+  "artifact": {
+    "wheel_entries": 40,
+    "seed_modules_present": false
+  },
+  "browser": {
+    "console_errors": 0,
+    "external_requests": 0,
+    "rag_artifact_visible": true,
+    "rag_markdown_line_citation_visible": true
+  },
+  "screenshot_regression": {
+    "role_label_visible": false,
+    "role_named_access_class_count": 0,
+    "weak_student_prompt_returns_local_text": true,
+    "personal_result_prompt_uses_external_model": false
+  },
+  "api_controls": {
+    "jwt_issuer_audience_validation": true,
+    "security_headers": true,
+    "request_ids": true,
+    "in_process_rate_limit": true,
+    "distributed_ingress_required": true
+  },
+  "provider_incident": {
+    "attempted_calls": 26,
+    "successful_calls": 0,
+    "approved_budget_exceeded": true,
+    "kill_switch_enabled": true,
+    "renewed_approval_required": true
+  },
+  "bounded_external_planner_check": {
+    "authorized_calls": 2,
+    "attempted_calls": 2,
+    "successful_validated_plans": 2,
+    "outbound_pii": false,
+    "outbound_result_rows_or_summaries": false,
+    "external_switch_restored_off": true
+  }
+}

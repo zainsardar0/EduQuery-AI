@@ -1,0 +1,10 @@
+{
+  "name": "eduquery-ai-root",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "npm --prefix ./apps/web run dev",
+    "install:sub": "npm --prefix ./apps/web install",
+    "start": "npm run dev"
+  }
+}

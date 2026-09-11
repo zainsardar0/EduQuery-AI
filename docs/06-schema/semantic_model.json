@@ -1,0 +1,161 @@
+{
+  "semantic_model": {
+    "version": "1.0",
+    "description": "MVP semantic mapping layer (partial) for EduQuery AI. Maps a core subset of the raw physical schema to logical business concepts. Not the final Wren AI MDL layer.",
+    "tables": [
+      {
+        "physical_name": "MARKS",
+        "logical_name": "Board Exam Marks",
+        "description": "Stores the final and board exam marks for students.",
+        "primary_key": null,
+        "columns": [
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar", "synonyms": ["campus", "branch", "school name"] },
+          { "physical_name": "ROLLNO", "logical_name": "Roll Number", "type": "varchar", "synonyms": ["student id", "roll number"] },
+          { "physical_name": "STUDENTNAME", "logical_name": "Student Name", "type": "varchar", "synonyms": ["student", "name"] },
+          { "physical_name": "SUBJECTNAME", "logical_name": "Subject", "type": "varchar", "synonyms": ["course", "class subject"] },
+          { "physical_name": "OBTAINED_MARKS", "logical_name": "Marks Obtained", "type": "float", "synonyms": ["score", "achieved marks"] },
+          { "physical_name": "TOTALMARKS", "logical_name": "Total Marks", "type": "float", "synonyms": ["max marks", "out of"] },
+          { "physical_name": "PASS%", "logical_name": "Pass Percentage", "type": "float", "synonyms": ["pass rate", "success rate"] },
+          { "physical_name": "GRADE", "logical_name": "Grade", "type": "varchar", "synonyms": ["letter grade"] },
+          { "physical_name": "STATUS", "logical_name": "Result Status", "type": "varchar", "synonyms": ["pass/fail", "result"] },
+          { "physical_name": "EXAMTYPE", "logical_name": "Exam Type", "type": "varchar", "synonyms": ["exam", "term"] },
+          { "physical_name": "YEAR", "logical_name": "Academic Year", "type": "int", "synonyms": ["year", "session"] },
+          { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "type": "varchar", "synonyms": ["grade", "class"] }
+        ]
+      },
+      {
+        "physical_name": "Marks_Internal",
+        "logical_name": "Internal Exam Marks",
+        "description": "Stores the mid-term and internal exam marks for students.",
+        "primary_key": null,
+        "columns": [
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar" },
+          { "physical_name": "ROLLNO", "logical_name": "Roll Number", "type": "varchar" },
+          { "physical_name": "STUDENTNAME", "logical_name": "Student Name", "type": "varchar" },
+          { "physical_name": "SUBJECTNAME", "logical_name": "Subject", "type": "varchar" },
+          { "physical_name": "MARKS", "logical_name": "Marks Obtained", "type": "float" },
+          { "physical_name": "TOTALMARKS", "logical_name": "Total Marks", "type": "float" },
+          { "physical_name": "EXAMTYPE", "logical_name": "Exam Type", "type": "varchar" },
+          { "physical_name": "YEAR", "logical_name": "Academic Year", "type": "int" },
+          { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "type": "varchar" }
+        ]
+      },
+      {
+        "physical_name": "STUDENTS_ROLL",
+        "logical_name": "Student Enrollment",
+        "description": "Master student list and enrollment for the year (board exams).",
+        "primary_key": null,
+        "columns": [
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar" },
+          { "physical_name": "ROLLNO", "logical_name": "Roll Number", "type": "varchar" },
+          { "physical_name": "STUDENT", "logical_name": "Student Name", "type": "varchar", "synonyms": ["name"] },
+          { "physical_name": "FATHER", "logical_name": "Father Name", "type": "varchar", "synonyms": ["parent"] },
+          { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "type": "varchar" },
+          { "physical_name": "SECTION", "logical_name": "Section", "type": "varchar" },
+          { "physical_name": "CATEGROY", "logical_name": "Category (Arts/Science)", "type": "varchar", "synonyms": ["stream", "group", "category"] },
+          { "physical_name": "HOUSE", "logical_name": "House", "type": "varchar", "synonyms": ["dorm", "hostel"] },
+          { "physical_name": "YEAR", "logical_name": "Academic Year", "type": "int", "synonyms": ["year"] }
+        ]
+      },
+      {
+        "physical_name": "STUDENTS_ROLL_INTERNAL_EXAM",
+        "logical_name": "Internal Student Enrollment",
+        "description": "Student enrollment list specific to internal mid-term exams.",
+        "primary_key": "ID",
+        "columns": [
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar" },
+          { "physical_name": "ROLLNO", "logical_name": "Roll Number", "type": "varchar" },
+          { "physical_name": "SMSNO", "logical_name": "SMS Number", "type": "varchar" },
+          { "physical_name": "STUDENT", "logical_name": "Student Name", "type": "varchar" },
+          { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "type": "varchar" },
+          { "physical_name": "SECTION", "logical_name": "Section", "type": "varchar" },
+          { "physical_name": "EXAM", "logical_name": "Exam Type", "type": "varchar" },
+          { "physical_name": "YEAR", "logical_name": "Academic Year", "type": "int" }
+        ]
+      },
+      {
+        "physical_name": "TEACHERS_PROFILE",
+        "logical_name": "Teacher Assignments",
+        "description": "Maps teachers to the subjects and classes they teach in a given year.",
+        "primary_key": "TID",
+        "columns": [
+          { "physical_name": "EID", "logical_name": "Employee ID", "type": "int", "synonyms": ["staff id"] },
+          { "physical_name": "TEACHER", "logical_name": "Teacher Name", "type": "varchar", "synonyms": ["staff name", "instructor"] },
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar" },
+          { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "type": "varchar" },
+          { "physical_name": "SECTION", "logical_name": "Section", "type": "varchar" },
+          { "physical_name": "SUBJECT", "logical_name": "Subject", "type": "varchar" },
+          { "physical_name": "YEAR", "logical_name": "Academic Year", "type": "int" }
+        ]
+      },
+      {
+        "physical_name": "STAFF_EMPLOYEE_CARD",
+        "logical_name": "Staff Directory",
+        "description": "Master HR record for staff.",
+        "primary_key": "ID",
+        "columns": [
+          { "physical_name": "EID", "logical_name": "Employee ID", "type": "int" },
+          { "physical_name": "NAME", "logical_name": "Employee Name", "type": "varchar", "synonyms": ["teacher name", "staff name"] },
+          { "physical_name": "DESIGNATION", "logical_name": "Job Title", "type": "varchar", "synonyms": ["role", "position"] },
+          { "physical_name": "SCHOOL", "logical_name": "School Code", "type": "varchar" }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "Student to Marks",
+        "from_table": "STUDENTS_ROLL",
+        "to_table": "MARKS",
+        "join_conditions": [
+          { "from_column": "ROLLNO", "to_column": "ROLLNO" },
+          { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+          { "from_column": "YEAR", "to_column": "YEAR" }
+        ],
+        "type": "one_to_many"
+      },
+      {
+        "name": "Student to Internal Marks",
+        "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+        "to_table": "Marks_Internal",
+        "join_conditions": [
+          { "from_column": "ROLLNO", "to_column": "ROLLNO" },
+          { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+          { "from_column": "YEAR", "to_column": "YEAR" },
+          { "from_column": "EXAM", "to_column": "EXAMTYPE" }
+        ],
+        "type": "one_to_many"
+      },
+      {
+        "name": "Teacher HR to Teacher Assignment",
+        "from_table": "STAFF_EMPLOYEE_CARD",
+        "to_table": "TEACHERS_PROFILE",
+        "join_conditions": [
+          { "from_column": "EID", "to_column": "EID" }
+        ],
+        "type": "one_to_many"
+      },
+      {
+        "name": "Teacher to Marks",
+        "from_table": "TEACHERS_PROFILE",
+        "to_table": "MARKS",
+        "join_conditions": [
+          { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+          { "from_column": "CLASS", "to_column": "CLASS" },
+          { "from_column": "SUBJECT", "to_column": "SUBJECTNAME" },
+          { "from_column": "YEAR", "to_column": "YEAR" }
+        ],
+        "type": "one_to_many",
+        "description": "Implicit relationship tying teacher assignments to student marks based on the school, class, subject, and year."
+      }
+    ],
+    "canonical_vocabulary": {
+      "student_name": ["STUDENTNAME", "STUDENT"],
+      "teacher_name": ["TEACHER", "NAME"],
+      "exam_type": ["EXAMTYPE", "EXAM_TYPE", "EXAM"],
+      "stream_category": ["CATEGORY", "CATEGROY"],
+      "employee_id": ["EID"],
+      "school_code": ["SCHOOL"],
+      "class_level": ["CLASS"]
+    }
+  }
+}

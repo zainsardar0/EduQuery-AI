@@ -1,0 +1,289 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "database": "db_aadc11_sqldaanish",
+    "server": "SQL Server 2022 (MSSQL16)",
+    "last_verified": "2026-08-02",
+    "description": "Semantic relationship map for the approved EduQuery AI NLP training scope. Documents implicit relationships, join paths, and column synonyms without excluded, credential-bearing, or authentication tables."
+  },
+  "relationships": [
+    {
+      "id": "R02",
+      "name": "Student-to-BoardMarks",
+      "from_table": "STUDENTS_ROLL",
+      "from_column": "ROLLNO",
+      "to_table": "MARKS",
+      "to_column": "ROLLNO",
+      "type": "one-to-many",
+      "description": "Links student board enrollment to their board/annual exam marks via roll number"
+    },
+    {
+      "id": "R03",
+      "name": "Student-to-InternalMarksStore",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "ROLLNO",
+      "to_table": "Marks_Internal",
+      "to_column": "ROLLNO",
+      "type": "one-to-many",
+      "description": "Links student enrollment to permanent internal marks store via ROLLNO (alternative to SMSNO path)"
+    },
+    {
+      "id": "R04",
+      "name": "Student-to-CombinedMarks",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "ALL_COMBINED",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student to combined marks across all sources"
+    },
+    {
+      "id": "R05",
+      "name": "Student-to-HallOfFame",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "HOF",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student enrollment to Hall of Fame marks with teacher attribution"
+    },
+    {
+      "id": "R06",
+      "name": "Student-to-Absent",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "ABSENT",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student enrollment to exam absences"
+    },
+    {
+      "id": "R07",
+      "name": "Student-to-PracticalMarks",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "PRAC",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student enrollment to practical exam marks"
+    },
+    {
+      "id": "R08",
+      "name": "Student-to-ResultLogs",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "StudentResultLogs",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student to their result viewing audit trail"
+    },
+    {
+      "id": "R09",
+      "name": "Student-to-QuizAnswers",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "SMSNO",
+      "to_table": "StudentAnswers",
+      "to_column": "SMSNO",
+      "type": "one-to-many",
+      "description": "Links student to their quiz responses"
+    },
+    {
+      "id": "R11",
+      "name": "Teacher-to-CombinedMarks",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "ALL_COMBINED",
+      "to_column": "EID",
+      "type": "one-to-many",
+      "description": "Links teacher profile to combined marks data"
+    },
+    {
+      "id": "R12",
+      "name": "Teacher-to-HallOfFame",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "HOF",
+      "to_column": "TEACHER_EID",
+      "type": "one-to-many",
+      "description": "Links teacher to their Hall of Fame performance records"
+    },
+    {
+      "id": "R13",
+      "name": "Teacher-to-ResultSummary",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "TR_ALL",
+      "to_column": "EID",
+      "type": "one-to-many",
+      "description": "Links teacher profile to their result summary with grade distribution"
+    },
+    {
+      "id": "R16",
+      "name": "Teacher-to-StaffCard",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "STAFF_EMPLOYEE_CARD",
+      "to_column": "EID",
+      "type": "one-to-one",
+      "description": "Links teacher profile to staff HR data"
+    },
+    {
+      "id": "R17",
+      "name": "Teacher-to-Suggestions",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "DBDSUGGESTIONS",
+      "to_column": "EID",
+      "type": "one-to-many",
+      "description": "Links teacher to their dashboard suggestions"
+    },
+    {
+      "id": "R18",
+      "name": "Teacher-to-TestRequests",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "EID",
+      "to_table": "ClassTestScheduleRequests",
+      "to_column": "EID",
+      "type": "one-to-many",
+      "description": "Links teacher to their class test schedule requests"
+    },
+    {
+      "id": "R20",
+      "name": "Subject-to-ExamSchedule",
+      "from_table": "CorrectSubjects",
+      "from_column": "SUBJECT",
+      "to_table": "Exam_Schedule",
+      "to_column": "SUBJECT",
+      "type": "reference",
+      "description": "Maps subjects to exam schedules"
+    },
+    {
+      "id": "R21",
+      "name": "Subject-to-TotalMarks",
+      "from_table": "CorrectSubjects",
+      "from_column": "SUBJECT",
+      "to_table": "SubjectTotals",
+      "to_column": "SUBJECT",
+      "type": "reference",
+      "join_conditions": ["CLASS"],
+      "description": "Maps subjects to their maximum marks per class"
+    },
+    {
+      "id": "R22",
+      "name": "QuizSubject-to-Questions",
+      "from_table": "Subjects_Quiz",
+      "from_column": "SubjectID",
+      "to_table": "Questions",
+      "to_column": "SubjectID",
+      "type": "one-to-many",
+      "description": "Links quiz subjects to their question bank"
+    },
+    {
+      "id": "R23",
+      "name": "Question-to-Answers",
+      "from_table": "Questions",
+      "from_column": "QuestionID",
+      "to_table": "StudentAnswers",
+      "to_column": "QuestionID",
+      "type": "one-to-many",
+      "description": "Links questions to student responses"
+    },
+    {
+      "id": "R24",
+      "name": "House-to-Attendance",
+      "from_table": "House_Management",
+      "from_column": "HOUSE_NAME",
+      "to_table": "House_Attendance_Daily",
+      "to_column": "HOUSE",
+      "type": "one-to-many",
+      "join_conditions": ["SCHOOL", "YEAR"],
+      "description": "Links house master data to daily attendance records"
+    },
+    {
+      "id": "R25",
+      "name": "House-to-Students",
+      "from_table": "House_Management",
+      "from_column": "HOUSE_NAME",
+      "to_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "to_column": "HOUSE",
+      "type": "one-to-many",
+      "join_conditions": ["SCHOOL"],
+      "description": "Links house to enrolled students"
+    },
+    {
+      "id": "R26",
+      "name": "ExamSchedule-to-AccessControl",
+      "from_table": "Exam_Schedule_26",
+      "from_column": "EXAM_TYPE",
+      "to_table": "MarksEntryAccessControl",
+      "to_column": "EXAM_TYPE",
+      "type": "reference",
+      "join_conditions": ["SCHOOL", "YEAR", "CLASS"],
+      "description": "Links exam schedule to marks entry access control"
+    },
+    {
+      "id": "R27",
+      "name": "BoardBenchmark-to-TeacherResults",
+      "from_table": "BOARD_PER",
+      "from_column": "SUBJECT",
+      "to_table": "TR_ALL",
+      "to_column": "SUBJECT",
+      "type": "reference",
+      "join_conditions": ["CLASS", "YEAR"],
+      "description": "Allows comparison of teacher pass rates against board benchmarks"
+    }
+  ],
+  "universal_join_columns": {
+    "SCHOOL": {
+      "description": "Campus code (e.g., ATKB, MNWB). Present on nearly every table. Primary multi-campus filter.",
+      "known_values": ["ATKB", "ATKG", "CTNB", "CTNG", "DGKB", "DGKG", "HSPB", "HSPG", "MNKB", "MNKG", "MNWB", "MNWG", "RJNB", "RJNG", "RYKB", "RYKG", "TNSB", "TNSG", "VEHB", "VEHG"]
+    },
+    "YEAR": {
+      "description": "Academic year in 2-digit format (22=2022, 23=2023, etc.). Present on nearly every table. Primary temporal filter.",
+      "known_values": [22, 23, 24, 25, 26]
+    },
+    "CLASS": {
+      "description": "Class/grade level (1-12). Present on most tables.",
+      "known_values": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    "SECTION": {
+      "description": "Section within a class (A, B, C). Present on most tables.",
+      "known_values": ["A", "B", "C"]
+    }
+  },
+  "column_synonyms": {
+    "student_name": ["STUDENTS_ROLL_INTERNAL_EXAM.STUDENT", "ALL_COMBINED.STUDENTNAME", "ABSENT.STUDENT NAME"],
+    "teacher_name": ["TEACHERS_PROFILE.TEACHER", "TEACHERS_INTERNAL_EXAM.NAME", "TEAHCERS.NAME", "TR_ALL.NAME", "HOF.TEACHER_NAME"],
+    "pass_rate": ["TR_ALL.PASS%", "BOARD_PER.BOARD"],
+    "marks_obtained": ["MARKS.OBTAINED", "Marks_Internal.OBTAINED"],
+    "total_marks": ["MARKS.TOTAL", "Marks_Internal.TOTAL", "SubjectTotals.TOTALMARKS"],
+    "percentage": ["MARKS.%", "Marks_Internal.%", "HOF.PERCENTAGE", "ALL_COMBINED2_SNAPSHOT.PERCENTAGE"],
+    "grade": ["MARKS.GRADE", "Marks_Internal.GRADE", "HOF.GRADE"],
+    "pass_fail_status": ["MARKS.STATUS", "Marks_Internal.STATUS", "HOF.STATUS"],
+    "exam_type": ["MARKS.EXAMTYPE", "Marks_Internal.EXAMTYPE", "STUDENTS_ROLL_INTERNAL_EXAM.EXAM", "Exam_Schedule.EXAM_TYPE"],
+    "subject": ["CorrectSubjects.SUBJECT", "MARKS.SUBJECT", "TEACHERS_PROFILE.SUBJECT"],
+    "category": ["STUDENTS_ROLL_INTERNAL_EXAM.CATEGORY", "TR_ALL.CATEGROY", "ALL_COMBINED.CATEGORY"],
+    "roll_number": ["STUDENTS_ROLL_INTERNAL_EXAM.ROLLNO", "MARKS.ROLLNO", "STUDENTS_ROLL.ROLLNO"],
+    "sms_number": ["STUDENTS_ROLL_INTERNAL_EXAM.SMSNO"],
+    "father_name": ["STUDENTS_ROLL_INTERNAL_EXAM.FATHER", "STAFF_EMPLOYEE_CARD.FATHER_NAME"],
+    "house": ["STUDENTS_ROLL_INTERNAL_EXAM.HOUSE", "House_Management.HOUSE_NAME"],
+    "group": ["STUDENTS_ROLL_INTERNAL_EXAM.GROUP"],
+    "employee_id": ["TEACHERS_PROFILE.EID", "TEACHERS_INTERNAL_EXAM.EID", "STAFF_EMPLOYEE_CARD.EID"],
+    "strength": ["TR_ALL.STRENGTH", "GZT_STRENGTH.count", "TEAHCERS.STRENGTH", "House_Attendance_Daily.TOTAL_STUDENTS"],
+    "board_benchmark": ["BOARD_PER.BOARD"],
+    "class_average": ["TR_ALL.CLASS AVG"],
+    "attendance": ["House_Attendance_Daily.PRESENT", "House_Attendance_Daily.ABSENT", "House_Attendance_Daily.LEAVE"]
+  },
+  "naming_issues": [
+    {"table": "STUDENTS_ROLL", "column": "CATEGROY", "correct": "CATEGORY", "type": "column_typo"},
+    {"table": "TR_ALL", "column": "CATEGROY", "correct": "CATEGORY", "type": "column_typo"},
+    {"table": "TEAHCERS", "correct_name": "TEACHERS", "type": "table_name_typo"},
+    {"table": "SUBJECT_GORUP_YEAR_MARKS_26", "correct_name": "SUBJECT_GROUP_YEAR_MARKS_26", "type": "table_name_typo"},
+    {"table": "ABSENT", "column": "STUDENT NAME", "issue": "Column name contains embedded space", "type": "naming_inconsistency"},
+    {"table": "SUBJECT_GROUP_YEAR_MARKS", "column": "TOTAL MARKS", "issue": "Column name contains embedded space", "type": "naming_inconsistency"},
+    {"table": "TR_ALL", "column": "CLASS AVG", "issue": "Column name contains embedded space", "type": "naming_inconsistency"},
+    {"table": "TR_ALL", "column": "PASS%", "issue": "Column name contains special character %", "type": "naming_inconsistency"},
+    {"table": "MARKS", "column": "%", "issue": "Single-character column name with special character", "type": "naming_inconsistency"},
+    {"table": "SUBJECT_GROUP_YEAR_MARKS", "column": "ANNUAL PASS%", "issue": "Column name contains space and special character %", "type": "naming_inconsistency"}
+  ]
+}
