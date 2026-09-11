@@ -36,8 +36,9 @@ class AuthMiddleware(BaseHTTPMiddleware):
     """
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
-        # 1. Allow public paths without authentication
-        if request.url.path == "/" or request.url.path.startswith(PUBLIC_PREFIXES):
+        # 1. Allow public paths, UI static assets (/assets, /favicon, /ambient-loop), and non-API routes without authentication
+        path = request.url.path
+        if path == "/" or not path.startswith("/api/") or path.startswith(PUBLIC_PREFIXES):
             return await call_next(request)
 
         # 2. Extract Authorization header or development test headers

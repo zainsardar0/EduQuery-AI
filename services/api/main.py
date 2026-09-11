@@ -146,8 +146,12 @@ if os.path.exists(_dist_dir):
     if os.path.exists(_assets_dir):
         app.mount("/assets", StaticFiles(directory=_assets_dir), name="assets")
 
-    @app.get("/", tags=["UI"], include_in_schema=False)
-    async def serve_spa_index():
+    @app.get("/{full_path:path}", tags=["UI"], include_in_schema=False)
+    async def serve_spa(full_path: str = ""):
+        if full_path:
+            file_path = os.path.join(_dist_dir, full_path)
+            if os.path.exists(file_path) and os.path.isfile(file_path):
+                return FileResponse(file_path)
         index_file = os.path.join(_dist_dir, "index.html")
         if os.path.exists(index_file):
             return FileResponse(index_file)
