@@ -88,6 +88,16 @@ Open `http://localhost:5173` in your browser to try the application live!
 
 ---
 
+### Option B: Run via Docker (1-Command Container Launch)
+If you have Docker installed, you can build and start the containerized backend & frontend in 1 command:
+
+```bash
+docker-compose up --build
+```
+Access the application at `http://localhost:8000`.
+
+---
+
 ## Running Automated Tests
 
 Run the complete backend test suite (113 passing tests):
@@ -109,6 +119,8 @@ uv run python -m pytest tests/unit -v
 | `docs/09-rag-data-md/` | Institutional policy markdown documents for RAG search |
 | `ml/` | ML model definitions, AutoGluon scripts, and MLflow pipeline |
 | `tests/` | Unit, integration, and security test suites |
+| `Dockerfile` | Production multi-stage Docker build specification |
+| `docker-compose.yml` | 1-command container orchestration config |
 
 ---
 
