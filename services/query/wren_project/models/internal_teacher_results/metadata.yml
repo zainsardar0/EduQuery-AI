@@ -1,0 +1,29 @@
+name: internal_teacher_results
+properties: { description: Group-wise internal examination teacher performance. }
+table_reference: { schema: dbo, table: INTERNAL_EXAM_GROUP_WISE_PERFORMANCE_VIEW }
+primary_key: id
+columns:
+  - { name: id, expression: ID, type: integer }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: exam_type, expression: EXAMTYPE, type: varchar }
+  - { name: teacher_id, expression: EID, type: integer }
+  - { name: teacher_name, expression: '"TEACHER NAME"', type: varchar }
+  - { name: school_year, expression: YEAR, type: integer }
+  - { name: class_level, expression: CLASS, type: integer }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: group_name, expression: '"GROUP"', type: varchar }
+  - { name: appeared, expression: APPEARED, type: integer }
+  - { name: absent, expression: ABSENT, type: integer }
+  - { name: passed, expression: PASS, type: integer }
+  - { name: grade_a_plus, expression: '"A+"', type: integer }
+  - { name: grade_a, expression: A, type: integer }
+  - { name: grade_b, expression: B, type: integer }
+  - { name: grade_c, expression: C, type: integer }
+  - { name: grade_d, expression: D, type: integer }
+  - { name: grade_e, expression: E, type: integer }
+  - { name: grade_f, expression: F, type: integer }
+  - { name: class_percentage, expression: '"CLASS%"', type: double }
+  - { name: class_average, expression: CLASS_AVG, type: double }
+  - { name: below_70, expression: '"BELOW 70%"', type: integer }
+  - { name: above_70, expression: '"ABOVE 70%"', type: integer }

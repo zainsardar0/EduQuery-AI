@@ -1,0 +1,12 @@
+name: teacher_board_middle
+properties: { description: Teacher overall percentage split into Board and Middle categories. }
+table_reference: { schema: dbo, table: vTeacher_sum_per_BOARD_MIDDLE }
+columns:
+  - { name: teacher_id, expression: EID, type: double }
+  - { name: teacher_name, expression: NAME, type: varchar }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: category, expression: CATEGROY, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: sum_obtained, expression: SumObtained, type: double }
+  - { name: sum_total, expression: SumTotal, type: double }
+  - { name: percentage, expression: '"%"', type: double }

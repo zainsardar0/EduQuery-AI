@@ -1,0 +1,19 @@
+name: consolidated_results
+properties:
+  description: Student-level total academic outcomes selected from authoritative pre-aggregated TOTAL result rows.
+table_reference:
+  schema: dbo
+  table: students_result_total
+columns:
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: student_name, expression: STUDENT, type: varchar }
+  - { name: student_reference, expression: SMSNO, type: integer }
+  - { name: roll_number, expression: ROLLNO, type: double }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: school_year, expression: YEAR, type: double }
+  - { name: percentage, expression: '"%"', type: double }
+  - { name: total_obtained, expression: OBTAINED, type: double }
+  - { name: total_marks, expression: TOTAL, type: double }
+  - { name: source_subject, expression: SUBJECT, type: varchar }
+  - { name: final_status, expression: STATUS, type: varchar }

@@ -1,0 +1,22 @@
+name: teacher_career
+properties: { description: Teacher career, ranking, workload, and above or below 70 summaries. }
+table_reference: { schema: dbo, table: ALL_COMBINED }
+columns:
+  - { name: teacher_id, expression: EID, type: varchar }
+  - { name: teacher_name, expression: NAME, type: varchar }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: class_level, expression: CLASS, type: varchar }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: school_year, expression: Year, type: varchar }
+  - { name: category, expression: CATEGROY, type: varchar }
+  - { name: strength, expression: STRENGTH, type: varchar }
+  - { name: appeared, expression: APPEARED, type: varchar }
+  - { name: passed, expression: PASSED, type: varchar }
+  - { name: pass_percentage, expression: '"PASS%"', type: varchar }
+  - { name: class_average, expression: '"CLASS AVG"', type: varchar }
+  - { name: above_70, expression: Above_70, type: varchar }
+  - { name: below_70, expression: Below_70, type: varchar }
+  - { name: position, expression: Position, type: varchar }
+  - { name: total_positions, expression: TOTAL_POSITIONS, type: varchar }
+  - { name: workload, expression: WL, type: varchar }

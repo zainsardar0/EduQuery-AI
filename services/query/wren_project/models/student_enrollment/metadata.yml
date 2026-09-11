@@ -1,0 +1,19 @@
+name: student_enrollment
+properties:
+  description: Current student enrollment records for internal examinations, scoped by live campus, class, section, year, and house.
+table_reference:
+  schema: dbo
+  table: STUDENTS_ROLL_INTERNAL_EXAM
+primary_key: id
+columns:
+  - { name: id, type: integer }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: student_reference, expression: SMSNO, type: varchar }
+  - { name: roll_number, expression: ROLLNO, type: varchar }
+  - { name: student_name, expression: STUDENT, type: varchar }
+  - { name: class_level, expression: CLASS, type: varchar }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: category, expression: CATEGORY, type: varchar }
+  - { name: school_year, expression: YEAR, type: integer }
+  - { name: house, expression: HOUSE, type: varchar }
+  - { name: exam_type, expression: EXAM, type: varchar }

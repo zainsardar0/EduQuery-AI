@@ -1,0 +1,19 @@
+name: annual_student_results
+properties: { description: Board and annual student result-card rows including subject and authoritative TOTAL rows. }
+table_reference: { schema: dbo, table: STUDENTS_RESULT_TOTAL }
+columns:
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: student_name, expression: STUDENT, type: varchar }
+  - { name: father_name, expression: FATHER, type: varchar }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: category, expression: CATEGROY, type: varchar }
+  - { name: school_year, expression: YEAR, type: double }
+  - { name: student_reference, expression: SMSNO, type: integer }
+  - { name: roll_number, expression: ROLLNO, type: double }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: obtained_marks, expression: OBTAINED, type: double }
+  - { name: total_marks, expression: TOTAL, type: double }
+  - { name: percentage, expression: '"%"', type: double }
+  - { name: result_status, expression: STATUS, type: varchar }
+  - { name: group_name, expression: '"GROUP"', type: varchar }

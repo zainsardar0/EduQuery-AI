@@ -1,0 +1,16 @@
+name: practical_marks
+properties: { description: Subject-level practical examination marks. }
+table_reference: { schema: dbo, table: PRAC }
+primary_key: id
+columns:
+  - { name: id, expression: ID, type: integer }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: obtained_marks, expression: OBTAINED, type: double }
+  - { name: total_marks, expression: TOTAL, type: double }
+  - { name: percentage, expression: '"%"', type: double }
+  - { name: grade, expression: GRADE, type: varchar }
+  - { name: result_status, expression: STATUS, type: varchar }
+  - { name: roll_number, expression: ROLLNO, type: double }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: school_year, expression: YEAR, type: double }
+  - { name: exam_type, expression: EXAMTYPE, type: varchar }

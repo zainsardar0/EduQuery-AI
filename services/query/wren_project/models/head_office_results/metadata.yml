@@ -1,0 +1,19 @@
+name: head_office_results
+properties: { description: Head Office formatted teacher performance records. }
+table_reference: { schema: dbo, table: HOF_FRMT }
+columns:
+  - { name: teacher_id, expression: EID, type: double }
+  - { name: teacher_name, expression: NAME, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: school_year, expression: Year, type: double }
+  - { name: class_section, expression: '"CLASS/SECTION"', type: varchar }
+  - { name: appeared, expression: APPEARED, type: integer }
+  - { name: pass_percentage, expression: '"PASS%"', type: varchar }
+  - { name: board_pass_percentage, expression: '"PASS% OF BOARD"', type: varchar }
+  - { name: position, expression: Position, type: integer }
+  - { name: total_positions, expression: TOTAL_POSITIONS, type: integer }
+  - { name: workload, expression: '"WORK LOAD"', type: integer }
+  - { name: class_average, expression: '"CLASS AVG"', type: double }
+  - { name: above_70_count, expression: '"ABOVE 70 COUNT"', type: integer }
+  - { name: below_70_count, expression: '"BELOW 70% COUNT"', type: integer }

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "metadata": {
+    "title": "EduQuery AI Canonical Domain Glossary & Vocabulary",
+    "version": "1.0.0",
+    "human_owner": "Muhammad Junaid",
+    "description": "Governed reference for campus codes, grade thresholds, fee categories, column synonyms, typo mappings, and key academic metric definitions."
+  },
+  "campus_codes": [
+    { "code": "ATKB", "gender": "Boys", "region": "Attock", "full_name": "Attock Campus (Boys)" },
+    { "code": "ATKG", "gender": "Girls", "region": "Attock", "full_name": "Attock Campus (Girls)" },
+    { "code": "CTNB", "gender": "Boys", "region": "Chiniot", "full_name": "Chiniot Campus (Boys)" },
+    { "code": "CTNG", "gender": "Girls", "region": "Chiniot", "full_name": "Chiniot Campus (Girls)" },
+    { "code": "DGKB", "gender": "Boys", "region": "D.G. Khan", "full_name": "D.G. Khan Campus (Boys)" },
+    { "code": "DGKG", "gender": "Girls", "region": "D.G. Khan", "full_name": "D.G. Khan Campus (Girls)" },
+    { "code": "HSPB", "gender": "Boys", "region": "Hasan Abdal", "full_name": "Hasan Abdal Campus (Boys)" },
+    { "code": "HSPG", "gender": "Girls", "region": "Hasan Abdal", "full_name": "Hasan Abdal Campus (Girls)" },
+    { "code": "MNKB", "gender": "Boys", "region": "Mianwali", "full_name": "Mianwali Campus (Boys)" },
+    { "code": "MNKG", "gender": "Girls", "region": "Mianwali", "full_name": "Mianwali Campus (Girls)" },
+    { "code": "MNWB", "gender": "Boys", "region": "Multan West", "full_name": "Multan West Campus (Boys)" },
+    { "code": "MNWG", "gender": "Girls", "region": "Multan West", "full_name": "Multan West Campus (Girls)" },
+    { "code": "RJNB", "gender": "Boys", "region": "Rajanpur", "full_name": "Rajanpur Campus (Boys)" },
+    { "code": "RJNG", "gender": "Girls", "region": "Rajanpur", "full_name": "Rajanpur Campus (Girls)" },
+    { "code": "RYKB", "gender": "Boys", "region": "Rahim Yar Khan", "full_name": "Rahim Yar Khan Campus (Boys)" },
+    { "code": "RYKG", "gender": "Girls", "region": "Rahim Yar Khan", "full_name": "Rahim Yar Khan Campus (Girls)" },
+    { "code": "TNSB", "gender": "Boys", "region": "Taunsa", "full_name": "Taunsa Campus (Boys)" },
+    { "code": "TNSG", "gender": "Girls", "region": "Taunsa", "full_name": "Taunsa Campus (Girls)" },
+    { "code": "VEHB", "gender": "Boys", "region": "Vehari", "full_name": "Vehari Campus (Boys)" },
+    { "code": "VEHG", "gender": "Girls", "region": "Vehari", "full_name": "Vehari Campus (Girls)" }
+  ],
+  "grade_scale": {
+    "pass_threshold_percentage": 33.0,
+    "grades": [
+      { "grade": "A1", "min_percentage": 90.0, "max_percentage": 100.0, "status": "PASS", "description": "Outstanding / Exceptional" },
+      { "grade": "A", "min_percentage": 80.0, "max_percentage": 89.99, "status": "PASS", "description": "Excellent" },
+      { "grade": "B", "min_percentage": 70.0, "max_percentage": 79.99, "status": "PASS", "description": "Very Good" },
+      { "grade": "C", "min_percentage": 60.0, "max_percentage": 69.99, "status": "PASS", "description": "Good" },
+      { "grade": "D", "min_percentage": 50.0, "max_percentage": 59.99, "status": "PASS", "description": "Fair" },
+      { "grade": "E", "min_percentage": 33.0, "max_percentage": 49.99, "status": "PASS", "description": "Satisfactory" },
+      { "grade": "F", "min_percentage": 0.0, "max_percentage": 32.99, "status": "FAIL", "description": "Unsatisfactory / Fail" }
+    ]
+  },
+  "fee_categories": [
+    { "code": "B", "description": "Boarder (Residential Student)" },
+    { "code": "S", "description": "Scholarship Student" },
+    { "code": "DS", "description": "Day Scholar" }
+  ],
+  "typo_mappings": [
+    { "raw_term": "CATEGROY", "canonical_term": "CATEGORY", "type": "column_typo", "occurrence": "STUDENTS_ROLL, TR_ALL" },
+    { "raw_term": "TEAHCERS", "canonical_term": "TEACHERS", "type": "table_name_typo", "occurrence": "dbo.TEAHCERS" },
+    { "raw_term": "SUBJECT_GORUP_YEAR_MARKS_26", "canonical_term": "SUBJECT_GROUP_YEAR_MARKS_26", "type": "table_name_typo", "occurrence": "dbo.SUBJECT_GORUP_YEAR_MARKS_26" },
+    { "raw_term": "STUDENT NAME", "canonical_term": "STUDENT_NAME", "type": "embedded_space", "occurrence": "ABSENT" },
+    { "raw_term": "TOTAL MARKS", "canonical_term": "TOTAL_MARKS", "type": "embedded_space", "occurrence": "SUBJECT_GROUP_YEAR_MARKS" },
+    { "raw_term": "CLASS AVG", "canonical_term": "CLASS_AVG", "type": "embedded_space", "occurrence": "TR_ALL" },
+    { "raw_term": "PASS%", "canonical_term": "PASS_PERCENTAGE", "type": "special_character", "occurrence": "TR_ALL" },
+    { "raw_term": "%", "canonical_term": "PERCENTAGE", "type": "special_character", "occurrence": "MARKS, Marks_Internal" }
+  ],
+  "metrics_definitions": {
+    "pass_rate": {
+      "name": "Pass Percentage",
+      "formula": "(COUNT(CASE WHEN STATUS = 'PASS' THEN 1 END) * 100.0) / COUNT(*)",
+      "description": "Percentage of students who achieved a score of 33% or higher."
+    },
+    "class_average": {
+      "name": "Class Average Marks Percentage",
+      "formula": "AVG(PERCENTAGE)",
+      "description": "Mean percentage mark across all enrolled students in a class/section."
+    },
+    "grade_distribution": {
+      "name": "Grade Distribution Buckets",
+      "buckets": ["Count_90_100", "Count_80_90", "Count_70_80", "Count_60_70", "Count_50_60", "Count_40_50", "Count_0_39"],
+      "description": "Count of students falling into specific performance percentage ranges."
+    }
+  }
+}

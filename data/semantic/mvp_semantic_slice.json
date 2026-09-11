@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "metadata": {
+    "title": "EduQuery AI MVP Semantic Model Slice",
+    "version": "1.0.0",
+    "human_owner": "Muhammad Junaid",
+    "status": "FROZEN_FOR_WS04",
+    "database": "db_aadc11_sqldaanish",
+    "engine": "SQL Server 2022 (MSSQL16)",
+    "description": "Governed, implementation-ready MVP semantic model slice containing approved 6 tables and 4 relationships for EduQuery AI NL2SQL context. Wren MDL generation remains frozen until WS-04.",
+    "provenance": {
+      "canonical_sources": [
+        {
+          "path": "docs/06-schema/master_schema.md",
+          "sha256": "0C4283E76E02801B73E22789CCF87E9008234BD07AB55578B6E901A62FB77959"
+        },
+        {
+          "path": "docs/06-schema/semantic_relationship_map.json",
+          "sha256": "D7371B5D30EBB5A384B0130B03F1E3397A7B9BBE87BDBD3964753C65A0266815"
+        },
+        {
+          "path": "docs/06-schema/semantic_model.json",
+          "sha256": "1EC3662EC17100D9D512364C9135E21E866CA76C07FAFD0E2D45A6B03705E13B"
+        },
+        {
+          "path": "docs/06-schema/canonical_column_reference.md",
+          "sha256": "E4ED4B3DB5CB0015F41F6FEF3F3764AA593B31CB6B757A5F56BCEEC3B077272B"
+        }
+      ]
+    }
+  },
+  "tables": [
+    {
+      "physical_name": "MARKS",
+      "logical_name": "Board Exam Marks",
+      "domain": "Marks & Results",
+      "description": "Permanent store for student board/annual exam marks and percentages.",
+      "primary_key": "ID",
+      "columns": [
+        { "physical_name": "ID", "logical_name": "Record Identifier", "data_type": "BIGINT", "is_nullable": false, "synonyms": ["id", "mark_id"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch", "school_code"] },
+        { "physical_name": "ROLLNO", "logical_name": "Roll Number", "data_type": "FLOAT", "is_nullable": false, "synonyms": ["student_id", "board_roll", "roll_number"] },
+        { "physical_name": "STUDENTNAME", "logical_name": "Student Name", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["student", "name", "full_name"] },
+        { "physical_name": "SUBJECTNAME", "logical_name": "Subject Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["subject", "course", "class_subject"] },
+        { "physical_name": "OBTAINED", "logical_name": "Marks Obtained", "data_type": "FLOAT", "is_nullable": true, "synonyms": ["obtained_marks", "score", "marks"] },
+        { "physical_name": "TOTAL", "logical_name": "Total Marks", "data_type": "FLOAT", "is_nullable": true, "synonyms": ["max_marks", "total", "out_of"] },
+        { "physical_name": "%", "logical_name": "Percentage", "data_type": "FLOAT", "is_nullable": true, "synonyms": ["percentage", "percent", "score_percentage"] },
+        { "physical_name": "GRADE", "logical_name": "Grade", "data_type": "VARCHAR(5)", "is_nullable": true, "synonyms": ["letter_grade", "grade"] },
+        { "physical_name": "STATUS", "logical_name": "Pass/Fail Status", "data_type": "VARCHAR(10)", "is_nullable": true, "synonyms": ["status", "result"] },
+        { "physical_name": "EXAMTYPE", "logical_name": "Exam Type", "data_type": "VARCHAR(50)", "is_nullable": false, "synonyms": ["exam", "term", "exam_type"] },
+        { "physical_name": "YEAR", "logical_name": "Academic Year", "data_type": "INT", "is_nullable": false, "synonyms": ["year", "session", "academic_year"] },
+        { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "data_type": "FLOAT", "is_nullable": false, "synonyms": ["grade_level", "class"] }
+      ]
+    },
+    {
+      "physical_name": "Marks_Internal",
+      "logical_name": "Internal Exam Marks",
+      "domain": "Marks & Results",
+      "description": "Permanent store for mid-term and internal exam marks.",
+      "primary_key": "ID",
+      "columns": [
+        { "physical_name": "ID", "logical_name": "Record Identifier", "data_type": "BIGINT", "is_nullable": false, "synonyms": ["id", "internal_mark_id"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch", "school_code"] },
+        { "physical_name": "ROLLNO", "logical_name": "Roll Number", "data_type": "INT", "is_nullable": false, "synonyms": ["student_id", "roll_number"] },
+        { "physical_name": "STUDENTNAME", "logical_name": "Student Name", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["student", "name"] },
+        { "physical_name": "SUBJECTNAME", "logical_name": "Subject Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["subject", "course"] },
+        { "physical_name": "OBTAINED", "logical_name": "Marks Obtained", "data_type": "DECIMAL(10,2)", "is_nullable": true, "synonyms": ["obtained_marks", "score"] },
+        { "physical_name": "TOTAL", "logical_name": "Total Marks", "data_type": "DECIMAL(10,2)", "is_nullable": true, "synonyms": ["max_marks", "total"] },
+        { "physical_name": "%", "logical_name": "Percentage", "data_type": "DECIMAL(10,2)", "is_nullable": true, "synonyms": ["percentage", "percent"] },
+        { "physical_name": "GRADE", "logical_name": "Grade", "data_type": "VARCHAR(5)", "is_nullable": true, "synonyms": ["letter_grade", "grade"] },
+        { "physical_name": "STATUS", "logical_name": "Pass/Fail Status", "data_type": "VARCHAR(10)", "is_nullable": true, "synonyms": ["status", "result"] },
+        { "physical_name": "EXAMTYPE", "logical_name": "Exam Type", "data_type": "VARCHAR(50)", "is_nullable": false, "synonyms": ["exam", "term", "exam_type"] },
+        { "physical_name": "YEAR", "logical_name": "Academic Year", "data_type": "INT", "is_nullable": false, "synonyms": ["year", "academic_year"] },
+        { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "data_type": "INT", "is_nullable": false, "synonyms": ["class", "grade_level"] }
+      ]
+    },
+    {
+      "physical_name": "STUDENTS_ROLL",
+      "logical_name": "Board Student Enrollment",
+      "domain": "Student Enrollment",
+      "description": "Master student enrollment list for board exams.",
+      "primary_key": "ID",
+      "columns": [
+        { "physical_name": "ID", "logical_name": "Record Identifier", "data_type": "BIGINT", "is_nullable": false, "synonyms": ["id"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch"] },
+        { "physical_name": "SMSNO", "logical_name": "SMS Number", "data_type": "INT", "is_nullable": false, "synonyms": ["sms_id", "student_system_number"] },
+        { "physical_name": "ROLLNO", "logical_name": "Roll Number", "data_type": "FLOAT", "is_nullable": false, "synonyms": ["roll_number", "board_roll"] },
+        { "physical_name": "STUDENT", "logical_name": "Student Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["student_name", "full_name"] },
+        { "physical_name": "FATHER", "logical_name": "Father Name", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["father_name", "parent"] },
+        { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "data_type": "FLOAT", "is_nullable": false, "synonyms": ["class", "grade_level"] },
+        { "physical_name": "SECTION", "logical_name": "Section", "data_type": "VARCHAR(10)", "is_nullable": true, "synonyms": ["section"] },
+        { "physical_name": "CATEGROY", "logical_name": "Fee Category (Typo)", "data_type": "VARCHAR(20)", "is_nullable": true, "synonyms": ["category", "stream", "fee_type"] },
+        { "physical_name": "HOUSE", "logical_name": "House Assignment", "data_type": "VARCHAR(50)", "is_nullable": true, "synonyms": ["house", "dorm"] },
+        { "physical_name": "YEAR", "logical_name": "Academic Year", "data_type": "INT", "is_nullable": false, "synonyms": ["year"] }
+      ]
+    },
+    {
+      "physical_name": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "logical_name": "Internal Student Enrollment",
+      "domain": "Student Enrollment",
+      "description": "Student enrollment list for internal exams.",
+      "primary_key": "ID",
+      "columns": [
+        { "physical_name": "ID", "logical_name": "Record Identifier", "data_type": "INT", "is_nullable": false, "synonyms": ["id"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch"] },
+        { "physical_name": "SMSNO", "logical_name": "SMS Number", "data_type": "VARCHAR(50)", "is_nullable": false, "synonyms": ["sms_id"] },
+        { "physical_name": "ROLLNO", "logical_name": "Roll Number", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["roll_number"] },
+        { "physical_name": "STUDENT", "logical_name": "Student Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["student_name", "full_name"] },
+        { "physical_name": "FATHER", "logical_name": "Father Name", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["father_name"] },
+        { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["class"] },
+        { "physical_name": "SECTION", "logical_name": "Section", "data_type": "VARCHAR(10)", "is_nullable": true, "synonyms": ["section"] },
+        { "physical_name": "CATEGORY", "logical_name": "Fee Category", "data_type": "VARCHAR(20)", "is_nullable": true, "synonyms": ["category", "stream"] },
+        { "physical_name": "YEAR", "logical_name": "Academic Year", "data_type": "INT", "is_nullable": false, "synonyms": ["year"] },
+        { "physical_name": "HOUSE", "logical_name": "House Assignment", "data_type": "VARCHAR(50)", "is_nullable": true, "synonyms": ["house"] },
+        { "physical_name": "EXAM", "logical_name": "Exam Type", "data_type": "VARCHAR(50)", "is_nullable": false, "synonyms": ["exam_type", "exam"] }
+      ]
+    },
+    {
+      "physical_name": "TEACHERS_PROFILE",
+      "logical_name": "Teacher Assignments",
+      "domain": "Teacher Management",
+      "description": "Teacher master record mapping staff to subjects and classes.",
+      "primary_key": "TID",
+      "columns": [
+        { "physical_name": "TID", "logical_name": "Assignment Identifier", "data_type": "INT", "is_nullable": false, "synonyms": ["tid", "assignment_id"] },
+        { "physical_name": "EID", "logical_name": "Employee ID", "data_type": "INT", "is_nullable": false, "synonyms": ["employee_id", "staff_id", "eid"] },
+        { "physical_name": "TEACHER", "logical_name": "Teacher Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["teacher_name", "instructor"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch"] },
+        { "physical_name": "CLASS", "logical_name": "Class/Grade Level", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["class"] },
+        { "physical_name": "SECTION", "logical_name": "Section", "data_type": "VARCHAR(10)", "is_nullable": true, "synonyms": ["section"] },
+        { "physical_name": "SUBJECT", "logical_name": "Subject Taught", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["subject", "course"] },
+        { "physical_name": "YEAR", "logical_name": "Academic Year", "data_type": "INT", "is_nullable": false, "synonyms": ["year"] }
+      ]
+    },
+    {
+      "physical_name": "STAFF_EMPLOYEE_CARD",
+      "logical_name": "Staff Directory",
+      "domain": "Administrative",
+      "description": "Master HR staff record for active institution personnel.",
+      "primary_key": "ID",
+      "columns": [
+        { "physical_name": "ID", "logical_name": "Record Identifier", "data_type": "INT", "is_nullable": false, "synonyms": ["id"] },
+        { "physical_name": "EID", "logical_name": "Employee ID", "data_type": "INT", "is_nullable": false, "synonyms": ["employee_id", "staff_id", "eid"] },
+        { "physical_name": "NAME", "logical_name": "Employee Name", "data_type": "VARCHAR(100)", "is_nullable": false, "synonyms": ["employee_name", "staff_name"] },
+        { "physical_name": "FATHER_NAME", "logical_name": "Father Name", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["father_name"] },
+        { "physical_name": "DESIGNATION", "logical_name": "Job Title", "data_type": "VARCHAR(100)", "is_nullable": true, "synonyms": ["designation", "role", "position"] },
+        { "physical_name": "SCHOOL", "logical_name": "School Code", "data_type": "VARCHAR(20)", "is_nullable": false, "synonyms": ["campus", "branch"] }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "R02",
+      "name": "Student to Board Marks",
+      "from_table": "STUDENTS_ROLL",
+      "from_column": "ROLLNO",
+      "to_table": "MARKS",
+      "to_column": "ROLLNO",
+      "type": "one_to_many",
+      "join_conditions": [
+        { "from_column": "ROLLNO", "to_column": "ROLLNO" },
+        { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+        { "from_column": "YEAR", "to_column": "YEAR" }
+      ],
+      "description": "Links student board enrollment to board exam marks via ROLLNO, SCHOOL, and YEAR."
+    },
+    {
+      "id": "R03",
+      "name": "Student to Internal Marks",
+      "from_table": "STUDENTS_ROLL_INTERNAL_EXAM",
+      "from_column": "ROLLNO",
+      "to_table": "Marks_Internal",
+      "to_column": "ROLLNO",
+      "type": "one_to_many",
+      "join_conditions": [
+        { "from_column": "ROLLNO", "to_column": "ROLLNO" },
+        { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+        { "from_column": "YEAR", "to_column": "YEAR" },
+        { "from_column": "EXAM", "to_column": "EXAMTYPE" }
+      ],
+      "description": "Links student internal enrollment to permanent internal marks store via ROLLNO, SCHOOL, YEAR, and EXAM/EXAMTYPE."
+    },
+    {
+      "id": "R16",
+      "name": "Teacher HR to Teacher Assignment",
+      "from_table": "STAFF_EMPLOYEE_CARD",
+      "from_column": "EID",
+      "to_table": "TEACHERS_PROFILE",
+      "to_column": "EID",
+      "type": "one_to_many",
+      "join_conditions": [
+        { "from_column": "EID", "to_column": "EID" }
+      ],
+      "description": "Links staff HR master record to specific subject/class teaching assignments via EID."
+    },
+    {
+      "id": "R14",
+      "name": "Teacher Assignment to Board Marks",
+      "from_table": "TEACHERS_PROFILE",
+      "from_column": "SCHOOL",
+      "to_table": "MARKS",
+      "to_column": "SCHOOL",
+      "type": "one_to_many",
+      "join_conditions": [
+        { "from_column": "SCHOOL", "to_column": "SCHOOL" },
+        { "from_column": "CLASS", "to_column": "CLASS" },
+        { "from_column": "SUBJECT", "to_column": "SUBJECTNAME" },
+        { "from_column": "YEAR", "to_column": "YEAR" }
+      ],
+      "description": "Implicit relationship tying teacher assignments to student board marks based on SCHOOL, CLASS, SUBJECT/SUBJECTNAME, and YEAR."
+    }
+  ]
+}

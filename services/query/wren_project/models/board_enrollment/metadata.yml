@@ -1,0 +1,17 @@
+name: board_enrollment
+properties:
+  description: Board and annual student enrollment records supplied for the Daanish gold-prompt catalog.
+table_reference: { schema: dbo, table: STUDENTS_ROLL }
+primary_key: id
+columns:
+  - { name: id, expression: ID, type: integer }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: group_name, expression: '"GROUP"', type: varchar }
+  - { name: student_reference, expression: SMSNO, type: integer }
+  - { name: roll_number, expression: ROLLNO, type: double }
+  - { name: student_name, expression: STUDENT, type: varchar }
+  - { name: father_name, expression: FATHER, type: varchar }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: category, expression: CATEGROY, type: varchar }
+  - { name: school_year, expression: YEAR, type: double }

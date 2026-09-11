@@ -1,0 +1,2442 @@
+[
+  {
+    "id": 1,
+    "prompt": "STUDENTS_ROLL Master student roll / enrollment Each row is one student in one school\u2013class\u2013section\u2013year. Typical fields: school, student name, father name, SMS number, roll number, class, section, year, group (Science/Arts/etc.), category (CATEGROY: B, DS, S, and related codes), and related IDs (board roll where used). Use for: Who is enrolled, strength counts, class lists, finding a student by name, SMS number, or roll number."
+  },
+  {
+    "id": 2,
+    "prompt": "MARKS Subject-wise theory (or combined) exam marks Student-grain marks joined to the roll on roll number + class + year. Fields include exam type (Annual, Midterm, Mock, and similar), subject, obtained, total, percentage (%), and often grade or status. Use for: A student\u2019s marks, fail lists, top scorers, class averages, and percentage bands (90\u2013100, 80\u201390, \u2026, 0\u201339)."
+  },
+  {
+    "id": 3,
+    "prompt": "PRAC Practical papers only Same grain as MARKS, but practical papers only (Physics, Chemistry, Biology, Computer Science, and similar science practicals). Fields follow obtained, total, and percentage. Use for: Practical obtained/total/%, practical pass/fail, and theory versus practical comparison."
+  },
+  {
+    "id": 4,
+    "prompt": "TR2_THEORY Teacher-wise theory result summary Built from theory marks plus teacher assignment. Grain: teacher (EID, name) \u00d7 school \u00d7 exam \u00d7 subject \u00d7 class \u00d7 section \u00d7 year \u00d7 category. Measures: strength, appeared, passed, pass%, class average, and band counts (Count_90_100 \u2026 Count_0_39). Use for: How a teacher\u2019s theory class performed: pass%, averages, and grade bands."
+  },
+  {
+    "id": 5,
+    "prompt": "TR2_PRAC Teacher-wise practical result summary Page 3 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog Same structure as TR2_THEORY, for practical results. Use for: Practical class average, practical pass%, and practical grade bands by teacher."
+  },
+  {
+    "id": 6,
+    "prompt": "TR_ALL Combined teacher result sheet Combined teacher result (theory + practical / all subjects), used as the main annual/board teacher detail. Same KPI set as the TR2 views, plus exam type. Coordinators use it for annual detail, including top-student context. Use for: Teacher class performance by exam, pass%, averages, and bands."
+  },
+  {
+    "id": 7,
+    "prompt": "ALL_COMBINED Teacher career / ranking snapshot Not limited to a single exam. Adds position, total positions, above 70, below 70, and workload (WL). Categories include BOARD, MIDDLE, BOARD_CAREER, MIDDLE_CAREER, and ALL SEC CAT. Use for: Rank teachers, compare schools, review workload versus pass%, and compare career versus one-year views."
+  },
+  {
+    "id": 8,
+    "prompt": "HOF_FRMT Head Office formatted teacher performance Head Office formatted teacher performance sheet (the formatted sister of HOF, used in Head Office interview and HO reports). Teacher identity plus result KPIs: pass%, class average, bands, position, workload, and often comparison with board percentage. Use for: HO interview packs, official teacher result format, and board versus school pass%."
+  },
+  {
+    "id": 9,
+    "prompt": "INTERNAL_EXAM_GROUP_WISE_PERFORMANCE_VIEW Internal exam group-wise teacher performance Internal-exam (non-Annual) teacher performance by group. Fields: school, exam type, EID, teacher name, year, class, section, subject, group, appeared, absent, pass, grade counts A+ through F, class%, class average, below 70%, and above 70%. Use for: Midterm/Mock/Monthly teacher results, absents, grade mix, and group-wise internal performance."
+  },
+  {
+    "id": 10,
+    "prompt": "SCHOOL_IND_POS_SUB School individual position by subject Student rank in a subject inside a school/class (and usually section/year). Use for: 1st/2nd/3rd in a subject, subject-wise merit lists, and who is top in a subject at a given school and class."
+  },
+  {
+    "id": 11,
+    "prompt": "STUDENT_RESULT_TOTAL Board / annual student result cards One row per student per subject (plus a SUBJECT = TOTAL overall row). Fields: school, student, father, class, section, category, year, SMSNO, roll number, group, subject, obtained, total, %, and status. Application code Page 4 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog also refers to this grain as STUDENTS_RESULT_TOTAL \u2014 same idea: board/annual result card. Use for: Annual/board report cards, overall %, fail subjects, and school-wise subject averages."
+  },
+  {
+    "id": 12,
+    "prompt": "STUDENT_RESULT_TOTAL_INTERNAL Internal exam student result cards Same idea as STUDENT_RESULT_TOTAL for internal exams (Midterm, Mock, Monthly, class tests): subject marks, percentage, grade, status, and often house and exam name. Use for: Internal report cards, exam-to-exam comparison, and internal fail lists."
+  },
+  {
+    "id": 13,
+    "prompt": "vTeacher_sum_per Teacher overall percentage (board vs middle) Teacher overall percentage summary (obtained versus total). The live dashboard uses a close view, vTeacher_sum_per_BOARD_MIDDLE, split into Board versus Middle percentages. Use for: A teacher\u2019s overall board %, middle %, or combined career %. How they connect"
+  },
+  {
+    "id": 14,
+    "prompt": "List board roll numbers of Class 10 ATKB year 26"
+  },
+  {
+    "id": 15,
+    "prompt": "Which students in Class 9 have no group assigned?"
+  },
+  {
+    "id": 16,
+    "prompt": "Show strength of Class 6 by school for year 26"
+  },
+  {
+    "id": 17,
+    "prompt": "List all students of House Green in Class 8 ATKB"
+  },
+  {
+    "id": 18,
+    "prompt": "How many Science group students are in Class 11 ATKB?"
+  },
+  {
+    "id": 19,
+    "prompt": "Show students of Class 12 Arts group year 26"
+  },
+  {
+    "id": 20,
+    "prompt": "Find all students with the same name in Class 10 ATKB"
+  },
+  {
+    "id": 21,
+    "prompt": "List Class 8 Section C roll numbers for year 26"
+  },
+  {
+    "id": 22,
+    "prompt": "Count students by category in Class 9 ATKB year 26"
+  },
+  {
+    "id": 23,
+    "prompt": "Show all schools that have Class 10 students in year 26"
+  },
+  {
+    "id": 24,
+    "prompt": "List students of Class 6 Section A ATKB"
+  },
+  {
+    "id": 25,
+    "prompt": "How many students are enrolled across all classes in ATKB year 26?"
+  },
+  {
+    "id": 26,
+    "prompt": "Show Class 10 students whose category is S"
+  },
+  {
+    "id": 27,
+    "prompt": "List unique groups in Class 11 ATKB year 26"
+  },
+  {
+    "id": 28,
+    "prompt": "Find student by roll number 319903"
+  },
+  {
+    "id": 29,
+    "prompt": "Show SMS number of all Class 9 Section A students"
+  },
+  {
+    "id": 30,
+    "prompt": "Count girls/boys if category encodes that in Class 8"
+  },
+  {
+    "id": 31,
+    "prompt": "List students of Class 7 year 25 in ATKB"
+  },
+  {
+    "id": 32,
+    "prompt": "Compare enrollment of Class 9 year 25 vs year 26 in ATKB"
+  },
+  {
+    "id": 33,
+    "prompt": "How many students moved from Class 9 year 25 to Class 10 year 26?"
+  },
+  {
+    "id": 34,
+    "prompt": "Show students missing father name in Class 10 Page 6 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 35,
+    "prompt": "List all Class 12 students with empty board roll number"
+  },
+  {
+    "id": 36,
+    "prompt": "Count students per class in ATKB year 26"
+  },
+  {
+    "id": 37,
+    "prompt": "Show section-wise strength of Class 11 TNSG"
+  },
+  {
+    "id": 38,
+    "prompt": "Find students named Muhammad Ali in year 26"
+  },
+  {
+    "id": 39,
+    "prompt": "List Class 10 Computer Science group students"
+  },
+  {
+    "id": 40,
+    "prompt": "Show all students of school ATKB Class 8 category ALL"
+  },
+  {
+    "id": 41,
+    "prompt": "How many students are in Section B across classes 9 and 10?"
+  },
+  {
+    "id": 42,
+    "prompt": "Show roll list of Class 9 Section D year 26"
+  },
+  {
+    "id": 43,
+    "prompt": "List students whose SMS number starts with 12"
+  },
+  {
+    "id": 44,
+    "prompt": "Count Science vs Arts students in Class 11 ATKB"
+  },
+  {
+    "id": 45,
+    "prompt": "Show Class 6 enrollment by section"
+  },
+  {
+    "id": 46,
+    "prompt": "Which class has the highest enrollment in ATKB year 26?"
+  },
+  {
+    "id": 47,
+    "prompt": "List students of Class 10 with missing section"
+  },
+  {
+    "id": 48,
+    "prompt": "Show student name, class, and section for SMS 7788"
+  },
+  {
+    "id": 49,
+    "prompt": "How many Class 12 students are there in each school year 26?"
+  },
+  {
+    "id": 50,
+    "prompt": "List all years available for school ATKB in the roll Marks (MARKS) (51\u2013100) Primary table / family: MARKS"
+  },
+  {
+    "id": 51,
+    "prompt": "Show all subject marks of roll 7788 in Annual year 26"
+  },
+  {
+    "id": 52,
+    "prompt": "What percentage did roll 2211 get in Mathematics Annual?"
+  },
+  {
+    "id": 53,
+    "prompt": "Show English marks of Class 10 Section A ATKB Midterm year 26"
+  },
+  {
+    "id": 54,
+    "prompt": "Which students failed Mathematics in Class 9 Annual?"
+  },
+  {
+    "id": 55,
+    "prompt": "List students who scored above 80% in Physics Class 10"
+  },
+  {
+    "id": 56,
+    "prompt": "Show top 10 scorers in Urdu for Class 8 Midterm"
+  },
+  {
+    "id": 57,
+    "prompt": "What is the class average of Mathematics for Class 9 Annual exam?"
+  },
+  {
+    "id": 58,
+    "prompt": "How many students scored 90% or above in Chemistry Class 11?"
+  },
+  {
+    "id": 59,
+    "prompt": "Show percentage distribution bands for English Class 10 Annual"
+  },
+  {
+    "id": 60,
+    "prompt": "List students with 0 marks in any subject in Midterm"
+  },
+  {
+    "id": 61,
+    "prompt": "Show obtained and total marks in Biology for roll 4455"
+  },
+  {
+    "id": 62,
+    "prompt": "Which subjects did this student fail in the last Annual exam?"
+  },
+  {
+    "id": 63,
+    "prompt": "Compare Midterm vs Annual percentage of roll 5522 in Mathematics"
+  },
+  {
+    "id": 64,
+    "prompt": "Show all marks of Class 7 Section B ATKB Annual year 26"
+  },
+  {
+    "id": 65,
+    "prompt": "Count appeared students in Computer Science Class 10 year 26"
+  },
+  {
+    "id": 66,
+    "prompt": "How many students passed Islamiyat in Class 9 Annual?"
+  },
+  {
+    "id": 67,
+    "prompt": "Show fail list of Pakistan Studies Class 10 ATKB"
+  },
+  {
+    "id": 68,
+    "prompt": "List students scoring below 40% in Class 8 Mathematics"
+  },
+  {
+    "id": 69,
+    "prompt": "Show grade of Physics for roll 1001 Annual"
+  },
+  {
+    "id": 70,
+    "prompt": "What is the highest percentage in English Class 12 Annual?"
+  },
+  {
+    "id": 71,
+    "prompt": "What is the lowest percentage in Mathematics Class 9 ATKB?"
+  },
+  {
+    "id": 72,
+    "prompt": "Show students who scored between 70 and 80 in Chemistry"
+  },
+  {
+    "id": 73,
+    "prompt": "List subject-wise marks of SMS 4521 for Annual year 26"
+  },
+  {
+    "id": 74,
+    "prompt": "How many students scored A+ (90\u2013100) in Urdu Class 10? Page 7 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 75,
+    "prompt": "Show Class 11 Physics Annual marks for Section A"
+  },
+  {
+    "id": 76,
+    "prompt": "Count students below 33% in Class 10 English"
+  },
+  {
+    "id": 77,
+    "prompt": "Show all exam types available for Class 9 Mathematics"
+  },
+  {
+    "id": 78,
+    "prompt": "List students with missing marks in English Midterm Class 10"
+  },
+  {
+    "id": 79,
+    "prompt": "What is average % of Class 10 Section C in Mathematics Annual?"
+  },
+  {
+    "id": 80,
+    "prompt": "Show Quran marks of Class 9 ATKB Annual"
+  },
+  {
+    "id": 81,
+    "prompt": "Rank Class 10 Section A students by Mathematics percentage"
+  },
+  {
+    "id": 82,
+    "prompt": "Show students who got 100% in any subject Annual year 26"
+  },
+  {
+    "id": 83,
+    "prompt": "How many students appeared in Social Studies Class 8 Annual?"
+  },
+  {
+    "id": 84,
+    "prompt": "List Class 6 General Science marks for Section A"
+  },
+  {
+    "id": 85,
+    "prompt": "Show pass percentage of Class 9 Science Mathematics Annual"
+  },
+  {
+    "id": 86,
+    "prompt": "Compare English average of Section A vs Section B Class 10"
+  },
+  {
+    "id": 87,
+    "prompt": "Show marks of all subjects for student Hamza Javed Class 10"
+  },
+  {
+    "id": 88,
+    "prompt": "Which Class 10 students scored below 50% in Physics?"
+  },
+  {
+    "id": 89,
+    "prompt": "Show Annual vs Midterm Chemistry marks for Class 11"
+  },
+  {
+    "id": 90,
+    "prompt": "Count fail students in Mathematics Class 8 year 26"
+  },
+  {
+    "id": 91,
+    "prompt": "Show students with percentage exactly 33 in any subject"
+  },
+  {
+    "id": 92,
+    "prompt": "List top 5 in Islamiyat Class 9 ATKB Annual"
+  },
+  {
+    "id": 93,
+    "prompt": "What is total obtained marks of roll 1001 in Annual?"
+  },
+  {
+    "id": 94,
+    "prompt": "Show Computer Science theory marks Class 10 year 26"
+  },
+  {
+    "id": 95,
+    "prompt": "How many students scored in 0\u201339 band in English Class 10?"
+  },
+  {
+    "id": 96,
+    "prompt": "Show Class 12 Mathematics Annual average by school"
+  },
+  {
+    "id": 97,
+    "prompt": "List students who passed all subjects in Class 9 Annual"
+  },
+  {
+    "id": 98,
+    "prompt": "Show subject-wise fail count for Class 10 ATKB Annual"
+  },
+  {
+    "id": 99,
+    "prompt": "What percentage did Maaz get in Mathematics year 26?"
+  },
+  {
+    "id": 100,
+    "prompt": "Show marks entry coverage: students with no Annual marks in English Practical (PRAC) (101\u2013140) Primary table / family: PRAC"
+  },
+  {
+    "id": 101,
+    "prompt": "Show Physics practical marks of Class 10 ATKB Annual"
+  },
+  {
+    "id": 102,
+    "prompt": "What is practical percentage of roll 2211 in Chemistry?"
+  },
+  {
+    "id": 103,
+    "prompt": "List students who failed Biology practical Class 11"
+  },
+  {
+    "id": 104,
+    "prompt": "Show class average of Computer Science practical Class 10"
+  },
+  {
+    "id": 105,
+    "prompt": "How many students scored above 80% in Physics practical?"
+  },
+  {
+    "id": 106,
+    "prompt": "Compare theory vs practical percentage in Chemistry for roll 7788"
+  },
+  {
+    "id": 107,
+    "prompt": "Show practical marks of Biology Class 9 Section A"
+  },
+  {
+    "id": 108,
+    "prompt": "List absents or zero practical marks in Physics Class 10"
+  },
+  {
+    "id": 109,
+    "prompt": "What is pass percentage of Chemistry practical Class 12?"
+  },
+  {
+    "id": 110,
+    "prompt": "Show top 10 practical scorers in Physics Class 10 Annual"
+  },
+  {
+    "id": 111,
+    "prompt": "Count students below 33% in Biology practical Class 11"
+  },
+  {
+    "id": 112,
+    "prompt": "Show practical grade bands for Computer Science Class 10"
+  },
+  {
+    "id": 113,
+    "prompt": "List Class 9 Chemistry practical obtained and total"
+  },
+  {
+    "id": 114,
+    "prompt": "What is the highest Biology practical % in ATKB Class 10? Page 8 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 115,
+    "prompt": "Show practical marks for all science subjects of roll 1001"
+  },
+  {
+    "id": 116,
+    "prompt": "Compare Physics practical average of Section A vs B"
+  },
+  {
+    "id": 117,
+    "prompt": "How many students appeared in Chemistry practical Class 10?"
+  },
+  {
+    "id": 118,
+    "prompt": "Show students with practical % above 90 in Physics"
+  },
+  {
+    "id": 119,
+    "prompt": "List practical fail students of Computer Science Class 12"
+  },
+  {
+    "id": 120,
+    "prompt": "Show Annual practical marks of Class 11 Biology TNSG"
+  },
+  {
+    "id": 121,
+    "prompt": "What is class average of Physics practical Class 9 year 26?"
+  },
+  {
+    "id": 122,
+    "prompt": "Rank students by Chemistry practical percentage Class 10"
+  },
+  {
+    "id": 123,
+    "prompt": "Show practical vs theory gap greater than 15 points in Physics"
+  },
+  {
+    "id": 124,
+    "prompt": "List Class 10 students with practical marks but no theory marks"
+  },
+  {
+    "id": 125,
+    "prompt": "Count A+ in Biology practical Class 11 ATKB"
+  },
+  {
+    "id": 126,
+    "prompt": "Show practical percentage of Computer Science Class 9 Annual"
+  },
+  {
+    "id": 127,
+    "prompt": "Which school has the lowest Physics practical class average?"
+  },
+  {
+    "id": 128,
+    "prompt": "Show practical pass% of Chemistry Class 10 by section"
+  },
+  {
+    "id": 129,
+    "prompt": "List students who scored 0 in any practical subject"
+  },
+  {
+    "id": 130,
+    "prompt": "Show Midterm practical marks if available for Class 10 Physics"
+  },
+  {
+    "id": 131,
+    "prompt": "Compare practical pass% of Physics vs Chemistry Class 10"
+  },
+  {
+    "id": 132,
+    "prompt": "Show practical strength vs appeared in Biology Class 11"
+  },
+  {
+    "id": 133,
+    "prompt": "List top practical scorer in each science subject Class 10"
+  },
+  {
+    "id": 134,
+    "prompt": "What is average practical % of Class 12 Science ATKB?"
+  },
+  {
+    "id": 135,
+    "prompt": "Show students who passed theory but failed practical in Chemistry"
+  },
+  {
+    "id": 136,
+    "prompt": "Show students who passed practical but failed theory in Physics"
+  },
+  {
+    "id": 137,
+    "prompt": "How many Class 10 students have practical marks entered?"
+  },
+  {
+    "id": 138,
+    "prompt": "Show practical marks of SMS 4521 in Biology"
+  },
+  {
+    "id": 139,
+    "prompt": "List Class 11 Computer Science practical below 50%"
+  },
+  {
+    "id": 140,
+    "prompt": "Show practical exam types available for Class 10 Physics Theory teacher results (TR2_THEORY) (141\u2013180) Primary table / family: TR2_THEORY"
+  },
+  {
+    "id": 141,
+    "prompt": "Show theory result of teacher EID 105 for Mathematics Class 10"
+  },
+  {
+    "id": 142,
+    "prompt": "What is class average of English theory for teacher Amina year 26?"
+  },
+  {
+    "id": 143,
+    "prompt": "Which teachers have theory pass% below 70 in Physics?"
+  },
+  {
+    "id": 144,
+    "prompt": "Show appeared and passed counts for Chemistry theory Class 11"
+  },
+  {
+    "id": 145,
+    "prompt": "List theory pass% of all Mathematics teachers in ATKB"
+  },
+  {
+    "id": 146,
+    "prompt": "Show percentage bands for Urdu theory Class 9 Section A"
+  },
+  {
+    "id": 147,
+    "prompt": "What is strength vs appeared in English theory Class 10?"
+  },
+  {
+    "id": 148,
+    "prompt": "Rank Mathematics theory teachers by class average year 26"
+  },
+  {
+    "id": 149,
+    "prompt": "Show theory result of Class 8 Islamiyat ATKB Annual"
+  },
+  {
+    "id": 150,
+    "prompt": "How many students are in 90\u2013100 band in English theory Class 10?"
+  },
+  {
+    "id": 151,
+    "prompt": "Show teacher name and theory pass% for Physics Class 12"
+  },
+  {
+    "id": 152,
+    "prompt": "List theory class averages for all sections of Class 9 Mathematics"
+  },
+  {
+    "id": 153,
+    "prompt": "Which theory subject has the lowest pass% in Class 10 ATKB?"
+  },
+  {
+    "id": 154,
+    "prompt": "Show Count_0_39 for Mathematics theory Class 8 Page 9 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 155,
+    "prompt": "Compare theory class avg of Section A and B in Chemistry"
+  },
+  {
+    "id": 156,
+    "prompt": "Show theory result of category B only for Class 9 English"
+  },
+  {
+    "id": 157,
+    "prompt": "List teachers with theory pass% above 90 in Urdu"
+  },
+  {
+    "id": 158,
+    "prompt": "Show Annual theory KPIs for Computer Science Class 10"
+  },
+  {
+    "id": 159,
+    "prompt": "What is passed count in Pakistan Studies theory Class 10?"
+  },
+  {
+    "id": 160,
+    "prompt": "Show theory bands for Quran Class 9 ATKB"
+  },
+  {
+    "id": 161,
+    "prompt": "Which EID teaches Mathematics theory in Class 10 Section A?"
+  },
+  {
+    "id": 162,
+    "prompt": "Show theory class average trend of English Class 9 year 25 vs 26"
+  },
+  {
+    "id": 163,
+    "prompt": "List theory subjects where below-40 count is more than 10"
+  },
+  {
+    "id": 164,
+    "prompt": "Show theory pass% by category for Class 11 Physics"
+  },
+  {
+    "id": 165,
+    "prompt": "Rank schools by Mathematics theory class average Class 10"
+  },
+  {
+    "id": 166,
+    "prompt": "Show teacher-wise theory appeared count in Biology Class 11"
+  },
+  {
+    "id": 167,
+    "prompt": "What is overall theory pass% of Class 7 Social Studies?"
+  },
+  {
+    "id": 168,
+    "prompt": "Show theory results of all teachers of Class 6 ATKB"
+  },
+  {
+    "id": 169,
+    "prompt": "List theory classes with class average below 50"
+  },
+  {
+    "id": 170,
+    "prompt": "Show Count_80_90 for English theory Class 12"
+  },
+  {
+    "id": 171,
+    "prompt": "Compare theory pass% of ATKB vs TNSG in Mathematics Class 10"
+  },
+  {
+    "id": 172,
+    "prompt": "Show theory strength of Class 10 Section C Physics"
+  },
+  {
+    "id": 173,
+    "prompt": "Which theory teacher has the most students in 0\u201339 band?"
+  },
+  {
+    "id": 174,
+    "prompt": "Show Annual theory pass% of Islamiyat Class 9 all sections"
+  },
+  {
+    "id": 175,
+    "prompt": "List theory results where appeared is less than strength"
+  },
+  {
+    "id": 176,
+    "prompt": "Show theory class avg of Mathematics for category DS"
+  },
+  {
+    "id": 177,
+    "prompt": "How many theory students passed in Class 8 English ATKB?"
+  },
+  {
+    "id": 178,
+    "prompt": "Show teacher EID, name, and theory pass% for Class 11 Chemistry"
+  },
+  {
+    "id": 179,
+    "prompt": "Rank Class 10 theory subjects by pass%"
+  },
+  {
+    "id": 180,
+    "prompt": "Show theory result for exam type Annual year 26 school ATKB Class 10 Practical teacher results (TR2_PRAC) (181\u2013215) Primary table / family: TR2_PRAC"
+  },
+  {
+    "id": 181,
+    "prompt": "Show practical result of Physics teacher EID 88 Class 10"
+  },
+  {
+    "id": 182,
+    "prompt": "What is practical class average of Chemistry Class 11 ATKB?"
+  },
+  {
+    "id": 183,
+    "prompt": "Which teachers have practical pass% below 70 in Biology?"
+  },
+  {
+    "id": 184,
+    "prompt": "Show practical bands for Computer Science Class 10 Annual"
+  },
+  {
+    "id": 185,
+    "prompt": "List practical pass% of all Physics teachers year 26"
+  },
+  {
+    "id": 186,
+    "prompt": "How many students are in 90\u2013100 practical band in Chemistry?"
+  },
+  {
+    "id": 187,
+    "prompt": "Show appeared vs passed in Biology practical Class 12"
+  },
+  {
+    "id": 188,
+    "prompt": "Rank practical teachers by class average in Physics"
+  },
+  {
+    "id": 189,
+    "prompt": "Show practical result of Class 9 Chemistry Section A"
+  },
+  {
+    "id": 190,
+    "prompt": "What is practical pass% of Computer Science Class 10?"
+  },
+  {
+    "id": 191,
+    "prompt": "Compare practical class avg of Physics Section A vs B"
+  },
+  {
+    "id": 192,
+    "prompt": "Show practical Count_0_39 for Biology Class 11"
+  },
+  {
+    "id": 193,
+    "prompt": "List practical subjects with class average below 60"
+  },
+  {
+    "id": 194,
+    "prompt": "Show teacher name for Chemistry practical Class 10 ATKB Page 10 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 195,
+    "prompt": "Which school has the best Physics practical pass%?"
+  },
+  {
+    "id": 196,
+    "prompt": "Show practical strength of Class 10 Science ATKB"
+  },
+  {
+    "id": 197,
+    "prompt": "List practical results where pass% is 100"
+  },
+  {
+    "id": 198,
+    "prompt": "Show practical grade bands for Physics Class 12"
+  },
+  {
+    "id": 199,
+    "prompt": "Compare theory pass% vs practical pass% for Chemistry Class 10"
+  },
+  {
+    "id": 200,
+    "prompt": "Show practical result of category S in Biology Class 11"
+  },
+  {
+    "id": 201,
+    "prompt": "Rank schools by Biology practical class average"
+  },
+  {
+    "id": 202,
+    "prompt": "How many practical students failed in Physics Class 10?"
+  },
+  {
+    "id": 203,
+    "prompt": "Show practical class avg of Computer Science year 25 vs 26"
+  },
+  {
+    "id": 204,
+    "prompt": "List practical teachers with more than 20 students below 40%"
+  },
+  {
+    "id": 205,
+    "prompt": "Show practical KPIs for all science subjects Class 10 ATKB"
+  },
+  {
+    "id": 206,
+    "prompt": "What is practical appeared count for Chemistry Class 9?"
+  },
+  {
+    "id": 207,
+    "prompt": "Show EID and practical pass% for Biology Class 10 Section A"
+  },
+  {
+    "id": 208,
+    "prompt": "Which practical class has the highest 90\u2013100 count?"
+  },
+  {
+    "id": 209,
+    "prompt": "Show practical results of Annual exam year 26 Class 11"
+  },
+  {
+    "id": 210,
+    "prompt": "List practical pass% by section for Physics Class 10"
+  },
+  {
+    "id": 211,
+    "prompt": "Show practical below-40 count school-wise for Chemistry"
+  },
+  {
+    "id": 212,
+    "prompt": "Compare ATKB and TNSG Chemistry practical class averages"
+  },
+  {
+    "id": 213,
+    "prompt": "Show practical result for teacher named Amina in Physics"
+  },
+  {
+    "id": 214,
+    "prompt": "How many Class 10 students passed Computer Science practical?"
+  },
+  {
+    "id": 215,
+    "prompt": "Show practical exam-wise class average for Physics Class 10 Combined teacher results (TR_ALL) (216\u2013265) Primary table / family: TR_ALL"
+  },
+  {
+    "id": 216,
+    "prompt": "Show annual TR result of teacher EID 105"
+  },
+  {
+    "id": 217,
+    "prompt": "List class average and pass% of all subjects taught by EID 12"
+  },
+  {
+    "id": 218,
+    "prompt": "What is pass percentage of Mathematics Class 10 Annual in ATKB?"
+  },
+  {
+    "id": 219,
+    "prompt": "Show appeared, passed, and pass% for English Class 9 Section A"
+  },
+  {
+    "id": 220,
+    "prompt": "Rank teachers of Physics by class average year 26"
+  },
+  {
+    "id": 221,
+    "prompt": "Show percentage bands of Chemistry Class 11 Annual ATKB"
+  },
+  {
+    "id": 222,
+    "prompt": "Which classes of teacher EID 88 have pass% below 60?"
+  },
+  {
+    "id": 223,
+    "prompt": "Show TR_ALL row for Urdu Class 8 Section B year 26"
+  },
+  {
+    "id": 224,
+    "prompt": "List all exam types in TR_ALL for Class 10 ATKB"
+  },
+  {
+    "id": 225,
+    "prompt": "How many students appeared in Islamiyat Class 9 Annual?"
+  },
+  {
+    "id": 226,
+    "prompt": "Show class average of all subjects for Class 10 Section A"
+  },
+  {
+    "id": 227,
+    "prompt": "Which subject has the lowest class average in Class 12 ATKB?"
+  },
+  {
+    "id": 228,
+    "prompt": "Show Count_90_100 for Mathematics Class 10 Annual"
+  },
+  {
+    "id": 229,
+    "prompt": "List teachers with pass% 100 in any subject year 26"
+  },
+  {
+    "id": 230,
+    "prompt": "Show strength, appeared, passed for Biology Class 11"
+  },
+  {
+    "id": 231,
+    "prompt": "Compare Midterm and Annual class average of English Class 10"
+  },
+  {
+    "id": 232,
+    "prompt": "Show TR_ALL for category B only Class 9 Mathematics"
+  },
+  {
+    "id": 233,
+    "prompt": "Rank sections of Class 10 by Mathematics class average"
+  },
+  {
+    "id": 234,
+    "prompt": "Show pass% of Pakistan Studies Class 10 all schools Page 11 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 235,
+    "prompt": "Which teacher has the most students in 0\u201339 band in English?"
+  },
+  {
+    "id": 236,
+    "prompt": "Show Annual results of all Class 6 subjects ATKB"
+  },
+  {
+    "id": 237,
+    "prompt": "List TR_ALL rows where appeared is 0"
+  },
+  {
+    "id": 238,
+    "prompt": "Show class avg of Computer Science Class 10 year 26"
+  },
+  {
+    "id": 239,
+    "prompt": "What is overall pass% of Class 8 Annual ATKB?"
+  },
+  {
+    "id": 240,
+    "prompt": "Show teacher-wise pass% for Class 7 Mathematics"
+  },
+  {
+    "id": 241,
+    "prompt": "Compare Class 9 vs Class 10 Mathematics class average"
+  },
+  {
+    "id": 242,
+    "prompt": "Show bands 70\u201380 and 80\u201390 for Physics Class 12"
+  },
+  {
+    "id": 243,
+    "prompt": "List subjects taught by EID 105 in year 26"
+  },
+  {
+    "id": 244,
+    "prompt": "Show TR_ALL for school TNSG Class 10 Annual"
+  },
+  {
+    "id": 245,
+    "prompt": "Which school has highest English pass% in Class 11?"
+  },
+  {
+    "id": 246,
+    "prompt": "Show passed count vs appeared for Quran Class 9"
+  },
+  {
+    "id": 247,
+    "prompt": "Rank Class 10 subjects by pass% in ATKB Annual"
+  },
+  {
+    "id": 248,
+    "prompt": "Show TR_ALL category ALL for Mathematics Class 10"
+  },
+  {
+    "id": 249,
+    "prompt": "List classes where class average is below 50 in year 26"
+  },
+  {
+    "id": 250,
+    "prompt": "Show Annual Chemistry result of Section C Class 11"
+  },
+  {
+    "id": 251,
+    "prompt": "How many teachers have pass% below board-like 70 in Science?"
+  },
+  {
+    "id": 252,
+    "prompt": "Show year 25 vs year 26 pass% for same teacher in Mathematics"
+  },
+  {
+    "id": 253,
+    "prompt": "List top 5 class averages in Class 10 ATKB Annual"
+  },
+  {
+    "id": 254,
+    "prompt": "Show TR_ALL for exam type MOCK if present"
+  },
+  {
+    "id": 255,
+    "prompt": "What is class average of Social Studies Class 8 Annual?"
+  },
+  {
+    "id": 256,
+    "prompt": "Show teacher name, subject, and pass% for Class 12 ATKB"
+  },
+  {
+    "id": 257,
+    "prompt": "Count subjects with pass% below 50 in Class 10"
+  },
+  {
+    "id": 258,
+    "prompt": "Show band distribution for English Class 10 Annual ATKB"
+  },
+  {
+    "id": 259,
+    "prompt": "List TR_ALL rows for EID 12 Class 9"
+  },
+  {
+    "id": 260,
+    "prompt": "Show section-wise pass% of Physics Class 10 Annual"
+  },
+  {
+    "id": 261,
+    "prompt": "Which exam type has the highest class average for Mathematics?"
+  },
+  {
+    "id": 262,
+    "prompt": "Show strength of Class 11 Chemistry in TR_ALL"
+  },
+  {
+    "id": 263,
+    "prompt": "Rank teachers by passed count in English year 26"
+  },
+  {
+    "id": 264,
+    "prompt": "Show Annual result of Arts Class 6 ATKB"
+  },
+  {
+    "id": 265,
+    "prompt": "List all TR_ALL records for school ATKB year 26 Class 10 Career and ranking (ALL_COMBINED) (266\u2013320) Primary table / family: ALL_COMBINED"
+  },
+  {
+    "id": 266,
+    "prompt": "Show ALL_COMBINED career snapshot of teacher EID 105"
+  },
+  {
+    "id": 267,
+    "prompt": "Rank Mathematics teachers by position in year 26"
+  },
+  {
+    "id": 268,
+    "prompt": "Which teachers have pass% below 70 in Physics?"
+  },
+  {
+    "id": 269,
+    "prompt": "List teachers with highest workload WL in school ATKB"
+  },
+  {
+    "id": 270,
+    "prompt": "Show position and total positions of teacher Amina in English"
+  },
+  {
+    "id": 271,
+    "prompt": "Compare BOARD vs MIDDLE category results for EID 12"
+  },
+  {
+    "id": 272,
+    "prompt": "Show above 70 and below 70 counts for Chemistry teachers"
+  },
+  {
+    "id": 273,
+    "prompt": "Rank schools by class average in Biology year 26"
+  },
+  {
+    "id": 274,
+    "prompt": "Show ALL SEC CAT ranking of Class 10 Mathematics Page 12 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 275,
+    "prompt": "Which teacher is position 1 in Physics BOARD category?"
+  },
+  {
+    "id": 276,
+    "prompt": "List teachers whose pass% is below 50 in any subject"
+  },
+  {
+    "id": 277,
+    "prompt": "Show workload and pass% of all Class 10 teachers ATKB"
+  },
+  {
+    "id": 278,
+    "prompt": "What is class average of teacher EID 88 in Urdu?"
+  },
+  {
+    "id": 279,
+    "prompt": "Show BOARD_CAREER results for EID 105"
+  },
+  {
+    "id": 280,
+    "prompt": "List MIDDLE_CAREER rankings for Mathematics"
+  },
+  {
+    "id": 281,
+    "prompt": "How many teachers are ranked in English ALL SEC CAT?"
+  },
+  {
+    "id": 282,
+    "prompt": "Show appeared and passed of teacher EID 12 BOARD category"
+  },
+  {
+    "id": 283,
+    "prompt": "Rank ATKB teachers by position in Class 9 Science"
+  },
+  {
+    "id": 284,
+    "prompt": "Show teachers with WL greater than 20 in year 26"
+  },
+  {
+    "id": 285,
+    "prompt": "Which school has the lowest below-70 count in English?"
+  },
+  {
+    "id": 286,
+    "prompt": "Show ALL_COMBINED for subject Mathematics Class 10 ATKB"
+  },
+  {
+    "id": 287,
+    "prompt": "List teachers at position worse than 50 in Physics"
+  },
+  {
+    "id": 288,
+    "prompt": "Show pass% and position of all Islamiyat teachers"
+  },
+  {
+    "id": 289,
+    "prompt": "Compare a teacher\u2019s BOARD vs BOARD_CAREER pass%"
+  },
+  {
+    "id": 290,
+    "prompt": "Show total positions available in Chemistry year 26"
+  },
+  {
+    "id": 291,
+    "prompt": "Rank teachers of Class 8 by class average"
+  },
+  {
+    "id": 292,
+    "prompt": "Show above-70 count for English teachers in ATKB"
+  },
+  {
+    "id": 293,
+    "prompt": "Which teachers have 0 students above 70%?"
+  },
+  {
+    "id": 294,
+    "prompt": "List ALL_COMBINED rows for category MIDDLE Class 7"
+  },
+  {
+    "id": 295,
+    "prompt": "Show school-wise position of Mathematics teachers"
+  },
+  {
+    "id": 296,
+    "prompt": "What is WL of the teacher ranked 1 in Physics?"
+  },
+  {
+    "id": 297,
+    "prompt": "Show pass% of all teachers teaching Class 12 Chemistry"
+  },
+  {
+    "id": 298,
+    "prompt": "Rank schools by overall teacher pass% in year 26"
+  },
+  {
+    "id": 299,
+    "prompt": "Show ALL_COMBINED for EID 105 subject Physics"
+  },
+  {
+    "id": 300,
+    "prompt": "List teachers with pass% 100 and high workload"
+  },
+  {
+    "id": 301,
+    "prompt": "Show below-70 vs above-70 for Class 10 English ATKB"
+  },
+  {
+    "id": 302,
+    "prompt": "Which category has more teachers: BOARD or MIDDLE?"
+  },
+  {
+    "id": 303,
+    "prompt": "Show career position of teacher named Hamza"
+  },
+  {
+    "id": 304,
+    "prompt": "List Class 11 teachers ordered by position"
+  },
+  {
+    "id": 305,
+    "prompt": "Show ALL SEC CAT class average for Urdu year 26"
+  },
+  {
+    "id": 306,
+    "prompt": "Rank Computer Science teachers by pass%"
+  },
+  {
+    "id": 307,
+    "prompt": "Show teachers whose position is 1 in any subject"
+  },
+  {
+    "id": 308,
+    "prompt": "List teachers of school TNSG with pass% below 60"
+  },
+  {
+    "id": 309,
+    "prompt": "Show YEAR-wise career snapshot of EID 12"
+  },
+  {
+    "id": 310,
+    "prompt": "Compare ATKB vs TNSG top teacher in Mathematics"
+  },
+  {
+    "id": 311,
+    "prompt": "Show class average, pass%, and WL together for EID 88"
+  },
+  {
+    "id": 312,
+    "prompt": "Which subject has the most teachers below pass% 70?"
+  },
+  {
+    "id": 313,
+    "prompt": "Show ALL_COMBINED strength and appeared for Biology"
+  },
+  {
+    "id": 314,
+    "prompt": "List teachers with missing position in year 26"
+  },
+  {
+    "id": 315,
+    "prompt": "Show BOARD category ranking for Class 10 all subjects"
+  },
+  {
+    "id": 316,
+    "prompt": "Rank MIDDLE teachers of Class 6\u20138 by class average Page 13 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 317,
+    "prompt": "Show pass% of teacher EID 105 across all subjects"
+  },
+  {
+    "id": 318,
+    "prompt": "Which teacher has the largest below-70 count?"
+  },
+  {
+    "id": 319,
+    "prompt": "Show ALL_COMBINED for CATEGROY ALL SEC CAT school ATKB"
+  },
+  {
+    "id": 320,
+    "prompt": "List top 10 teachers by class average in year 26 Head office format (HOF_FRMT) (321\u2013350) Primary table / family: HOF_FRMT"
+  },
+  {
+    "id": 321,
+    "prompt": "Show Head Office format report for teacher EID 105"
+  },
+  {
+    "id": 322,
+    "prompt": "List HOF formatted results of all Mathematics teachers ATKB"
+  },
+  {
+    "id": 323,
+    "prompt": "What is board pass percentage compared to this teacher\u2019s pass%?"
+  },
+  {
+    "id": 324,
+    "prompt": "Show Head Office interview sheet for EID 12"
+  },
+  {
+    "id": 325,
+    "prompt": "Rank teachers in HOF format by pass%"
+  },
+  {
+    "id": 326,
+    "prompt": "Show class average in Head Office format for Physics Class 10"
+  },
+  {
+    "id": 327,
+    "prompt": "List teachers below board percentage in Chemistry"
+  },
+  {
+    "id": 328,
+    "prompt": "Show HOF_FRMT bands for English teacher EID 88"
+  },
+  {
+    "id": 329,
+    "prompt": "What is the position of teacher Amina in Head Office report?"
+  },
+  {
+    "id": 330,
+    "prompt": "Show workload in Head Office format for Class 9 teachers"
+  },
+  {
+    "id": 331,
+    "prompt": "List HOF formatted rows for school ATKB year 26"
+  },
+  {
+    "id": 332,
+    "prompt": "Show Head Office result of all Class 12 teachers"
+  },
+  {
+    "id": 333,
+    "prompt": "Compare HOF pass% of EID 105 year 25 vs year 26"
+  },
+  {
+    "id": 334,
+    "prompt": "Which teachers fail the Head Office pass% benchmark?"
+  },
+  {
+    "id": 335,
+    "prompt": "Show formatted HOF of MIDDLE category teachers"
+  },
+  {
+    "id": 336,
+    "prompt": "List Head Office reports where below-70 is high"
+  },
+  {
+    "id": 337,
+    "prompt": "Show HOF_FRMT for subject Urdu Class 8"
+  },
+  {
+    "id": 338,
+    "prompt": "Rank Head Office teachers of ATKB by class average"
+  },
+  {
+    "id": 339,
+    "prompt": "Show appeared and passed in HOF format for EID 12"
+  },
+  {
+    "id": 340,
+    "prompt": "What is overall Head Office score of teacher EID 105?"
+  },
+  {
+    "id": 341,
+    "prompt": "List HOF formatted Physics teachers ordered by position"
+  },
+  {
+    "id": 342,
+    "prompt": "Show Head Office format for ALL SEC CAT"
+  },
+  {
+    "id": 343,
+    "prompt": "Which HOF teachers have pass% above board%?"
+  },
+  {
+    "id": 344,
+    "prompt": "Show HOF_FRMT of Class 10 Annual teachers ATKB"
+  },
+  {
+    "id": 345,
+    "prompt": "List teachers with empty HOF record in year 26"
+  },
+  {
+    "id": 346,
+    "prompt": "Show Head Office comparison of two EIDs in Mathematics"
+  },
+  {
+    "id": 347,
+    "prompt": "What is class average and pass% on HOF sheet for Chemistry?"
+  },
+  {
+    "id": 348,
+    "prompt": "Show HOF formatted result of teacher named Amina"
+  },
+  {
+    "id": 349,
+    "prompt": "Rank schools using Head Office teacher pass%"
+  },
+  {
+    "id": 350,
+    "prompt": "Show HOF_FRMT workload vs pass% for ATKB Science teachers Internal exams (INTERNAL_EXAM_GROUP_WISE_PERFORMANCE_VIEW) (351\u2013400) Primary table / family: INTERNAL_EXAM_GROUP_WISE_PERFORMANCE_VIEW"
+  },
+  {
+    "id": 351,
+    "prompt": "Show internal exam performance of teacher EID 105"
+  },
+  {
+    "id": 352,
+    "prompt": "What is class average of Mathematics Midterm Class 10 ATKB?"
+  },
+  {
+    "id": 353,
+    "prompt": "How many students were absent in English Mock Class 9? Page 14 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 354,
+    "prompt": "Show grade counts A+ to F for Chemistry Midterm Class 11"
+  },
+  {
+    "id": 355,
+    "prompt": "List internal results of Physics Class 10 Section A year 26"
+  },
+  {
+    "id": 356,
+    "prompt": "Which teachers have internal class% below 70?"
+  },
+  {
+    "id": 357,
+    "prompt": "Show above 70% and below 70% for Midterm English Class 10"
+  },
+  {
+    "id": 358,
+    "prompt": "What is pass count in Monthly exam Mathematics Class 8?"
+  },
+  {
+    "id": 359,
+    "prompt": "Show group-wise internal performance of Class 11 Science"
+  },
+  {
+    "id": 360,
+    "prompt": "List Mock exam class averages for all subjects Class 10"
+  },
+  {
+    "id": 361,
+    "prompt": "How many students appeared in Urdu Midterm Class 9 ATKB?"
+  },
+  {
+    "id": 362,
+    "prompt": "Show internal performance of EID 12 excluding Annual"
+  },
+  {
+    "id": 363,
+    "prompt": "Which section has the best Midterm class average in Physics?"
+  },
+  {
+    "id": 364,
+    "prompt": "Show absent count by subject in Class 10 Mock ATKB"
+  },
+  {
+    "id": 365,
+    "prompt": "List teachers with most F grades in Midterm year 26"
+  },
+  {
+    "id": 366,
+    "prompt": "Show A+ count for Mathematics Mock Class 10"
+  },
+  {
+    "id": 367,
+    "prompt": "Compare Midterm vs Mock class average of English Class 9"
+  },
+  {
+    "id": 368,
+    "prompt": "Show internal group-wise pass of Biology Class 11"
+  },
+  {
+    "id": 369,
+    "prompt": "What is CLASS% of Computer Science Midterm Class 10?"
+  },
+  {
+    "id": 370,
+    "prompt": "List internal exams of year 26 for school ATKB Class 8"
+  },
+  {
+    "id": 371,
+    "prompt": "Show teacher name and class avg for Islamiyat Midterm"
+  },
+  {
+    "id": 372,
+    "prompt": "How many students scored D or below in Chemistry Mock?"
+  },
+  {
+    "id": 373,
+    "prompt": "Show internal performance for GROUP Science Class 11"
+  },
+  {
+    "id": 374,
+    "prompt": "Rank internal teachers by class average in year 26"
+  },
+  {
+    "id": 375,
+    "prompt": "Show below 70% count for Class 7 Midterm Mathematics"
+  },
+  {
+    "id": 376,
+    "prompt": "List subjects with more absents than 5 in Mock Class 10"
+  },
+  {
+    "id": 377,
+    "prompt": "Show internal result of Class 6 Section A all subjects"
+  },
+  {
+    "id": 378,
+    "prompt": "What is appeared vs absent in Physics Midterm Class 12?"
+  },
+  {
+    "id": 379,
+    "prompt": "Show grade mix of English Midterm Class 10 ATKB"
+  },
+  {
+    "id": 380,
+    "prompt": "Compare ATKB vs TNSG Midterm class average in Mathematics"
+  },
+  {
+    "id": 381,
+    "prompt": "Show internal performance of year 27 Monthly May exams"
+  },
+  {
+    "id": 382,
+    "prompt": "List EID 88 internal rows for Class 9"
+  },
+  {
+    "id": 383,
+    "prompt": "Which group has lower class% in Class 11 Chemistry Midterm?"
+  },
+  {
+    "id": 384,
+    "prompt": "Show A and B counts for Urdu Mock Class 8"
+  },
+  {
+    "id": 385,
+    "prompt": "Rank sections by Midterm pass count in Class 10"
+  },
+  {
+    "id": 386,
+    "prompt": "Show internal class average of Quran Class 9"
+  },
+  {
+    "id": 387,
+    "prompt": "How many F grades in Mathematics Midterm Class 8?"
+  },
+  {
+    "id": 388,
+    "prompt": "Show internal performance where appeared is 0"
+  },
+  {
+    "id": 389,
+    "prompt": "List Mock exams with class average above 80"
+  },
+  {
+    "id": 390,
+    "prompt": "Show teacher-wise absent totals in Midterm year 26"
+  },
+  {
+    "id": 391,
+    "prompt": "What is CLASS_AVG of Pakistan Studies Midterm Class 10?"
+  },
+  {
+    "id": 392,
+    "prompt": "Show internal results for exam type CLASS TEST"
+  },
+  {
+    "id": 393,
+    "prompt": "Compare above 70% of Midterm vs Mock for same teacher"
+  },
+  {
+    "id": 394,
+    "prompt": "Show group-wise A+ in Physics Class 11 Midterm"
+  },
+  {
+    "id": 395,
+    "prompt": "List internal subjects of Class 12 ATKB year 26 Page 15 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 396,
+    "prompt": "Show pass vs appeared for Computer Science Mock Class 10"
+  },
+  {
+    "id": 397,
+    "prompt": "Which teacher has the highest Midterm class% in English?"
+  },
+  {
+    "id": 398,
+    "prompt": "Show internal performance of Section B only Class 10"
+  },
+  {
+    "id": 399,
+    "prompt": "List year 24 to 26 internal class averages for EID 105"
+  },
+  {
+    "id": 400,
+    "prompt": "Show students-absent heavy subjects in Class 9 Mock School individual position (SCHOOL_IND_POS_SUB) (401\u2013440) Primary table / family: SCHOOL_IND_POS_SUB"
+  },
+  {
+    "id": 401,
+    "prompt": "Who is first in Mathematics in Class 10 ATKB year 26?"
+  },
+  {
+    "id": 402,
+    "prompt": "Show subject-wise positions of roll 7788"
+  },
+  {
+    "id": 403,
+    "prompt": "List top 3 students in English Class 9 Section A"
+  },
+  {
+    "id": 404,
+    "prompt": "What is the school position of SMS 4521 in Physics?"
+  },
+  {
+    "id": 405,
+    "prompt": "Show merit list of Chemistry Class 11 ATKB"
+  },
+  {
+    "id": 406,
+    "prompt": "Rank Class 10 Section B students in Urdu"
+  },
+  {
+    "id": 407,
+    "prompt": "Who got position 1 in Biology Class 12 TNSG?"
+  },
+  {
+    "id": 408,
+    "prompt": "Show position of Maaz in Mathematics Class 10"
+  },
+  {
+    "id": 409,
+    "prompt": "List students with position 1 in any subject Class 9"
+  },
+  {
+    "id": 410,
+    "prompt": "Show Computer Science positions for Class 10 ATKB"
+  },
+  {
+    "id": 411,
+    "prompt": "What is Islamiyat position of roll 1001?"
+  },
+  {
+    "id": 412,
+    "prompt": "Rank all Class 8 students in General Science"
+  },
+  {
+    "id": 413,
+    "prompt": "Show last position holders in Mathematics Class 10"
+  },
+  {
+    "id": 414,
+    "prompt": "List top 10 in Pakistan Studies Class 10 Annual"
+  },
+  {
+    "id": 415,
+    "prompt": "Who is second in English Class 11 ATKB?"
+  },
+  {
+    "id": 416,
+    "prompt": "Show subject positions of student Hamza Javed"
+  },
+  {
+    "id": 417,
+    "prompt": "Compare Mathematics position of two students in Class 10"
+  },
+  {
+    "id": 418,
+    "prompt": "List Class 9 Science group positions in Physics"
+  },
+  {
+    "id": 419,
+    "prompt": "Show position and percentage together for Chemistry Class 10"
+  },
+  {
+    "id": 420,
+    "prompt": "Who improved from year 25 to 26 in English position?"
+  },
+  {
+    "id": 421,
+    "prompt": "Show school-wide top scorer in Urdu Class 12"
+  },
+  {
+    "id": 422,
+    "prompt": "List positions of all subjects for SMS 7788"
+  },
+  {
+    "id": 423,
+    "prompt": "What is average position of Class 10 Section A in Mathematics?"
+  },
+  {
+    "id": 424,
+    "prompt": "Show students ranked in top 5 in three or more subjects"
+  },
+  {
+    "id": 425,
+    "prompt": "Rank Class 7 students in Mathematics school ATKB"
+  },
+  {
+    "id": 426,
+    "prompt": "Show Quran merit list Class 9 ATKB"
+  },
+  {
+    "id": 427,
+    "prompt": "Who is first in Class 10 overall if TOTAL subject exists?"
+  },
+  {
+    "id": 428,
+    "prompt": "List Section A vs Section B first positions in Physics"
+  },
+  {
+    "id": 429,
+    "prompt": "Show position of category B students in English Class 9"
+  },
+  {
+    "id": 430,
+    "prompt": "How many students share position 1 in any subject?"
+  },
+  {
+    "id": 431,
+    "prompt": "Show Computer Science Class 11 position list"
+  },
+  {
+    "id": 432,
+    "prompt": "Rank girls/boys if category allows in Mathematics Class 10"
+  },
+  {
+    "id": 433,
+    "prompt": "Show lowest rank in Chemistry Class 10 ATKB"
+  },
+  {
+    "id": 434,
+    "prompt": "List students whose position is worse than 30 in English"
+  },
+  {
+    "id": 435,
+    "prompt": "Show subject-wise first position names for Class 10 ATKB Page 16 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 436,
+    "prompt": "What is Physics position of Abdul Qadeer Class 10?"
+  },
+  {
+    "id": 437,
+    "prompt": "Show merit list of Class 6 Social Studies"
+  },
+  {
+    "id": 438,
+    "prompt": "Rank Class 12 students in Mathematics by school"
+  },
+  {
+    "id": 439,
+    "prompt": "Show position change of roll 2211 from Midterm to Annual"
+  },
+  {
+    "id": 440,
+    "prompt": "List top student of each subject in Class 8 ATKB Board/annual student totals (STUDENT_RESULT_TOTAL) (441\u2013490) Primary table / family: STUDENT_RESULT_TOTAL"
+  },
+  {
+    "id": 441,
+    "prompt": "Show annual result card of SMS 4521"
+  },
+  {
+    "id": 442,
+    "prompt": "Show all subject marks of student Maaz Class 10 year 26"
+  },
+  {
+    "id": 443,
+    "prompt": "What is overall percentage of roll 1001 in Annual?"
+  },
+  {
+    "id": 444,
+    "prompt": "Which subjects did this student fail in Annual exam?"
+  },
+  {
+    "id": 445,
+    "prompt": "List Class 10 ATKB students with overall % above 90"
+  },
+  {
+    "id": 446,
+    "prompt": "Show STATUS pass or fail of Chemistry for roll 7788"
+  },
+  {
+    "id": 447,
+    "prompt": "What is father name and class of student Hamza Javed?"
+  },
+  {
+    "id": 448,
+    "prompt": "Show TOTAL row of student result for SMS 2211"
+  },
+  {
+    "id": 449,
+    "prompt": "List fail students of Class 8 Annual ATKB"
+  },
+  {
+    "id": 450,
+    "prompt": "Show subject-wise obtained and total of Class 9 Section A"
+  },
+  {
+    "id": 451,
+    "prompt": "What is average % of English in Class 10 ATKB Annual?"
+  },
+  {
+    "id": 452,
+    "prompt": "Count pass vs fail in Mathematics Class 9 year 26"
+  },
+  {
+    "id": 453,
+    "prompt": "Show result card of all students named Ahmed in Class 10"
+  },
+  {
+    "id": 454,
+    "prompt": "List students with overall grade A1 in Class 10"
+  },
+  {
+    "id": 455,
+    "prompt": "Show Pakistan Studies marks of Class 10 Annual"
+  },
+  {
+    "id": 456,
+    "prompt": "Which Class 12 students failed any subject?"
+  },
+  {
+    "id": 457,
+    "prompt": "Show group-wise overall % of Class 11 ATKB"
+  },
+  {
+    "id": 458,
+    "prompt": "List students missing TOTAL subject row"
+  },
+  {
+    "id": 459,
+    "prompt": "What is overall % of Class 10 Section A average?"
+  },
+  {
+    "id": 460,
+    "prompt": "Show Annual result of category DS Class 9"
+  },
+  {
+    "id": 461,
+    "prompt": "Rank students by overall % in Class 10 ATKB"
+  },
+  {
+    "id": 462,
+    "prompt": "Show obtained marks of Quran for Class 9 Annual"
+  },
+  {
+    "id": 463,
+    "prompt": "How many students passed all subjects in Class 8?"
+  },
+  {
+    "id": 464,
+    "prompt": "List students with % below 40 in Class 7 Annual"
+  },
+  {
+    "id": 465,
+    "prompt": "Show result card combined for board/annual of SMS 7788"
+  },
+  {
+    "id": 466,
+    "prompt": "Compare overall % of Class 9 year 25 vs Class 10 year 26 for same student"
+  },
+  {
+    "id": 467,
+    "prompt": "Show subject fail count per student in Class 10"
+  },
+  {
+    "id": 468,
+    "prompt": "What is highest overall % in Class 11 ATKB?"
+  },
+  {
+    "id": 469,
+    "prompt": "List students whose STATUS is FAIL in English"
+  },
+  {
+    "id": 470,
+    "prompt": "Show Class 6 Annual totals for Section B"
+  },
+  {
+    "id": 471,
+    "prompt": "Count students with overall % between 80 and 90"
+  },
+  {
+    "id": 472,
+    "prompt": "Show Science group result cards of Class 10"
+  },
+  {
+    "id": 473,
+    "prompt": "List students with 0 in any Annual subject"
+  },
+  {
+    "id": 474,
+    "prompt": "What is pass rate of Class 12 Annual ATKB?"
+  },
+  {
+    "id": 475,
+    "prompt": "Show STUDENT, SUBJECT, % for Class 10 Mathematics Page 17 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 476,
+    "prompt": "Rank schools by Class 10 overall average %"
+  },
+  {
+    "id": 477,
+    "prompt": "Show Annual marks of Islamiyat Class 9 Section C"
+  },
+  {
+    "id": 478,
+    "prompt": "List students who scored 100 in any Annual subject"
+  },
+  {
+    "id": 479,
+    "prompt": "Show fail subjects of students below 33% in Class 10"
+  },
+  {
+    "id": 480,
+    "prompt": "What is class-wise average overall % in ATKB year 26?"
+  },
+  {
+    "id": 481,
+    "prompt": "Show result of Computer Science Annual Class 10"
+  },
+  {
+    "id": 482,
+    "prompt": "List Class 11 Arts students ordered by overall %"
+  },
+  {
+    "id": 483,
+    "prompt": "Show students with incomplete Annual result"
+  },
+  {
+    "id": 484,
+    "prompt": "Compare ATKB vs TNSG Class 10 overall average"
+  },
+  {
+    "id": 485,
+    "prompt": "Show Annual STATUS of all subjects for roll 4455"
+  },
+  {
+    "id": 486,
+    "prompt": "How many Class 9 students have overall FAIL?"
+  },
+  {
+    "id": 487,
+    "prompt": "Show father-wise search: results of sons of Ali"
+  },
+  {
+    "id": 488,
+    "prompt": "List top 20 overall % in Class 10 year 26"
+  },
+  {
+    "id": 489,
+    "prompt": "Show subject-wise school average from student totals"
+  },
+  {
+    "id": 490,
+    "prompt": "What is overall % of Hasnain Class 10 Annual? Internal student totals (STUDENT_RESULT_TOTAL_INTERNAL) (491\u2013530) Primary table / family: STUDENT_RESULT_TOTAL_INTERNAL"
+  },
+  {
+    "id": 491,
+    "prompt": "Show internal result card of SMS 4521"
+  },
+  {
+    "id": 492,
+    "prompt": "Show Midterm marks of all subjects for roll 7788"
+  },
+  {
+    "id": 493,
+    "prompt": "What is internal percentage of Mathematics Class 10 Section A?"
+  },
+  {
+    "id": 494,
+    "prompt": "List students who failed English in Mock exam"
+  },
+  {
+    "id": 495,
+    "prompt": "Show grade and status of Physics Midterm for roll 1001"
+  },
+  {
+    "id": 496,
+    "prompt": "Compare Midterm vs Mock overall % of student Maaz"
+  },
+  {
+    "id": 497,
+    "prompt": "Show internal remarks of Class 9 Section A Midterm"
+  },
+  {
+    "id": 498,
+    "prompt": "List Class 10 students with internal overall % below 50"
+  },
+  {
+    "id": 499,
+    "prompt": "Show house-wise internal average of Class 8 ATKB"
+  },
+  {
+    "id": 500,
+    "prompt": "What is GRADE of Chemistry Mock for SMS 2211?"
+  },
+  {
+    "id": 501,
+    "prompt": "Show internal TOTAL row of student Hamza"
+  },
+  {
+    "id": 502,
+    "prompt": "Count A+ grades in Midterm Class 10 ATKB"
+  },
+  {
+    "id": 503,
+    "prompt": "List internal fail students of Class 7 Mathematics"
+  },
+  {
+    "id": 504,
+    "prompt": "Show exam-wise internal % of roll 5522"
+  },
+  {
+    "id": 505,
+    "prompt": "Which students dropped more than 15% from Midterm to Mock?"
+  },
+  {
+    "id": 506,
+    "prompt": "Show internal result of GROUP Science Class 11"
+  },
+  {
+    "id": 507,
+    "prompt": "List Monthly exam totals for Class 8 year 27"
+  },
+  {
+    "id": 508,
+    "prompt": "Show STATUS of all internal subjects for roll 4455"
+  },
+  {
+    "id": 509,
+    "prompt": "What is class average internal % of Urdu Class 9?"
+  },
+  {
+    "id": 510,
+    "prompt": "Rank Class 10 students by Midterm overall %"
+  },
+  {
+    "id": 511,
+    "prompt": "Show internal obtained and total of Computer Science"
+  },
+  {
+    "id": 512,
+    "prompt": "List students absent or with no internal marks in English"
+  },
+  {
+    "id": 513,
+    "prompt": "Show Mock result cards of Class 12 ATKB"
+  },
+  {
+    "id": 514,
+    "prompt": "Compare internal vs Annual overall % for same student"
+  },
+  {
+    "id": 515,
+    "prompt": "How many students passed all internal subjects in Midterm? Page 18 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 516,
+    "prompt": "Show category-wise internal average Class 9"
+  },
+  {
+    "id": 517,
+    "prompt": "List internal grades F in Mathematics Class 8"
+  },
+  {
+    "id": 518,
+    "prompt": "Show Section B Midterm result card list Class 10"
+  },
+  {
+    "id": 519,
+    "prompt": "What is highest internal % in Physics Class 11 Mock?"
+  },
+  {
+    "id": 520,
+    "prompt": "Show internal exam names available for Class 10 year 26"
+  },
+  {
+    "id": 521,
+    "prompt": "List students with internal GRADE A in all subjects"
+  },
+  {
+    "id": 522,
+    "prompt": "Show house attendance-linked internal weak students if house is present"
+  },
+  {
+    "id": 523,
+    "prompt": "Rank sections by Midterm overall average Class 10"
+  },
+  {
+    "id": 524,
+    "prompt": "Show internal fail count by subject Class 9 ATKB"
+  },
+  {
+    "id": 525,
+    "prompt": "What is PERCENTAGE of Quran Midterm for roll 1001?"
+  },
+  {
+    "id": 526,
+    "prompt": "Show internal result card combined for student named Ahmed"
+  },
+  {
+    "id": 527,
+    "prompt": "List year 26 internal totals for Class 6 Section A"
+  },
+  {
+    "id": 528,
+    "prompt": "Compare two exams\u2019 internal % for Class 10 English"
+  },
+  {
+    "id": 529,
+    "prompt": "Show students at risk: internal % below pass threshold"
+  },
+  {
+    "id": 530,
+    "prompt": "How many Class 10 students have internal TOTAL below 60%? Teacher overall % (vTeacher_sum_per) (531\u2013555) Primary table / family: vTeacher_sum_per"
+  },
+  {
+    "id": 531,
+    "prompt": "What is overall board percentage of teacher EID 105?"
+  },
+  {
+    "id": 532,
+    "prompt": "What is middle percentage of teacher EID 12?"
+  },
+  {
+    "id": 533,
+    "prompt": "Show board vs middle percentage of EID 88"
+  },
+  {
+    "id": 534,
+    "prompt": "Rank teachers by overall board percentage"
+  },
+  {
+    "id": 535,
+    "prompt": "Which teachers have board % below 70?"
+  },
+  {
+    "id": 536,
+    "prompt": "Show overall obtained vs total of teacher Amina"
+  },
+  {
+    "id": 537,
+    "prompt": "List ATKB teachers ordered by middle percentage"
+  },
+  {
+    "id": 538,
+    "prompt": "What is combined overall % of EID 105?"
+  },
+  {
+    "id": 539,
+    "prompt": "Compare board % of Mathematics teachers"
+  },
+  {
+    "id": 540,
+    "prompt": "Show teachers with middle % higher than board %"
+  },
+  {
+    "id": 541,
+    "prompt": "Rank EID by SumObtained in board category"
+  },
+  {
+    "id": 542,
+    "prompt": "Which teacher has the highest overall board % in ATKB?"
+  },
+  {
+    "id": 543,
+    "prompt": "Show vTeacher_sum_per for all Class 10 teachers"
+  },
+  {
+    "id": 544,
+    "prompt": "List teachers with overall % above 85"
+  },
+  {
+    "id": 545,
+    "prompt": "Show board percentage circular value for EID 12"
+  },
+  {
+    "id": 546,
+    "prompt": "Compare overall % of EID 105 and EID 88"
+  },
+  {
+    "id": 547,
+    "prompt": "Which MIDDLE teachers are below 60% overall?"
+  },
+  {
+    "id": 548,
+    "prompt": "Show overall % of Physics teachers only"
+  },
+  {
+    "id": 549,
+    "prompt": "Rank schools by average teacher board %"
+  },
+  {
+    "id": 550,
+    "prompt": "Show teachers with missing overall percentage"
+  },
+  {
+    "id": 551,
+    "prompt": "What is overall % of teacher named Amina in BOARD category?"
+  },
+  {
+    "id": 552,
+    "prompt": "List top 10 teachers by overall middle percentage"
+  },
+  {
+    "id": 553,
+    "prompt": "Show year-wise overall % if the view has year"
+  },
+  {
+    "id": 554,
+    "prompt": "Compare Science vs Arts teachers\u2019 overall board %"
+  },
+  {
+    "id": 555,
+    "prompt": "Show overall % and pass% together for EID 105 Page 19 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog Cross-table / ranking / diagnosis / prediction (556\u2013610) Primary table / family: Cross-table"
+  },
+  {
+    "id": 556,
+    "prompt": "Show Class 10 ATKB Annual report: enrollment, subject averages, and top students"
+  },
+  {
+    "id": 557,
+    "prompt": "Which Class 9 subjects have low internal class% and low Annual pass%?"
+  },
+  {
+    "id": 558,
+    "prompt": "List students who are strong in practical but weak in theory in Physics"
+  },
+  {
+    "id": 559,
+    "prompt": "Show teachers whose internal Midterm class% is high but Annual pass% is low"
+  },
+  {
+    "id": 560,
+    "prompt": "Find at-risk Class 10 students: internal % below 50 and Annual fail history"
+  },
+  {
+    "id": 561,
+    "prompt": "Compare school ATKB vs TNSG in Class 10 Mathematics across marks and TR_ALL"
+  },
+  {
+    "id": 562,
+    "prompt": "Show merit list plus teacher name for Chemistry Class 11"
+  },
+  {
+    "id": 563,
+    "prompt": "Which sections of Class 10 need remedial classes in English?"
+  },
+  {
+    "id": 564,
+    "prompt": "Show students with top school position but below 70 in another subject"
+  },
+  {
+    "id": 565,
+    "prompt": "List teachers with high workload and low pass%"
+  },
+  {
+    "id": 566,
+    "prompt": "Predict whether Class 10 Mathematics Annual average will exceed last Mock"
+  },
+  {
+    "id": 567,
+    "prompt": "Show Class 8 students who failed internal Mathematics and are still enrolled"
+  },
+  {
+    "id": 568,
+    "prompt": "Rank schools by Class 9 overall student % and teacher pass%"
+  },
+  {
+    "id": 569,
+    "prompt": "Show subject-wise first position and that subject\u2019s teacher"
+  },
+  {
+    "id": 570,
+    "prompt": "Which groups in Class 11 have the weakest internal grade mix?"
+  },
+  {
+    "id": 571,
+    "prompt": "List students missing from MARKS but present in STUDENTS_ROLL for Annual"
+  },
+  {
+    "id": 572,
+    "prompt": "Show practical fail students who still passed overall TOTAL"
+  },
+  {
+    "id": 573,
+    "prompt": "Compare BOARD career ranking with current year TR_ALL pass%"
+  },
+  {
+    "id": 574,
+    "prompt": "Show Head Office teachers below board% who also have low internal class%"
+  },
+  {
+    "id": 575,
+    "prompt": "Find consistently high performers: above 85% in last three exams"
+  },
+  {
+    "id": 576,
+    "prompt": "Show Class 10 Science students with Biology practical below 40"
+  },
+  {
+    "id": 577,
+    "prompt": "Which school has most absents in Midterm and lowest Annual pass%?"
+  },
+  {
+    "id": 578,
+    "prompt": "List Class 12 students with board result TOTAL below 45%"
+  },
+  {
+    "id": 579,
+    "prompt": "Show teacher EID 12 complete picture: overall %, TR_ALL, internal view, HOF"
+  },
+  {
+    "id": 580,
+    "prompt": "Rank Class 6\u20138 teachers by middle category overall %"
+  },
+  {
+    "id": 581,
+    "prompt": "Show students whose Annual overall % dropped more than 10 from last year"
+  },
+  {
+    "id": 582,
+    "prompt": "List Physics teachers ranked in bottom 10 with high below-70 count"
+  },
+  {
+    "id": 583,
+    "prompt": "Show Class 10 Section A full dashboard: strength, averages, top 5, fail list"
+  },
+  {
+    "id": 584,
+    "prompt": "Which subjects should ATKB focus on before Annual based on Mock class%?"
+  },
+  {
+    "id": 585,
+    "prompt": "Show students who got position 1 in Mathematics but failed English"
+  },
+  {
+    "id": 586,
+    "prompt": "Compare theory teacher pass% vs practical teacher pass% for same class"
+  },
+  {
+    "id": 587,
+    "prompt": "List Year 26 Annual weak schools in English using ALL_COMBINED"
+  },
+  {
+    "id": 588,
+    "prompt": "Show internal grade F students who still have no remedial flag in totals"
+  },
+  {
+    "id": 589,
+    "prompt": "Find teachers appearing in ALL_COMBINED position 1 for two subjects"
+  },
+  {
+    "id": 590,
+    "prompt": "Show Class 11 group-wise internal vs Annual Chemistry performance"
+  },
+  {
+    "id": 591,
+    "prompt": "List students with no practical marks in science subjects"
+  },
+  {
+    "id": 592,
+    "prompt": "Show correlation-style view: high absent internal subjects vs low Annual average"
+  },
+  {
+    "id": 593,
+    "prompt": "Which Class 9 category B students are top 10 overall?"
+  },
+  {
+    "id": 594,
+    "prompt": "Show school ATKB Class 10 pass% vs teacher workload in Mathematics"
+  },
+  {
+    "id": 595,
+    "prompt": "List SMS numbers of students who failed two or more Annual subjects Page 20 EduQuery AI \u2014 Schema Guide and Gold Prompt Catalog"
+  },
+  {
+    "id": 596,
+    "prompt": "Show year 25 to 26 improvement of teacher EID 105 in English"
+  },
+  {
+    "id": 597,
+    "prompt": "Rank all campuses by Class 8 Annual overall student average"
+  },
+  {
+    "id": 598,
+    "prompt": "Show students enrolled in year 26 with no internal result card"
+  },
+  {
+    "id": 599,
+    "prompt": "Predict Annual fail risk for Class 10 Mathematics using Midterm and Mock %"
+  },
+  {
+    "id": 600,
+    "prompt": "Recommend the weakest three subjects for school ATKB Class 11 based on pass% and class average"
+  },
+  {
+    "id": 601,
+    "prompt": "Show Class 10 ATKB students above 90% overall and their Mathematics school position"
+  },
+  {
+    "id": 602,
+    "prompt": "List teachers whose HOF pass% is below board% and internal below-70% is high"
+  },
+  {
+    "id": 603,
+    "prompt": "Show enrollment strength vs appeared in Annual for Class 9 ATKB"
+  },
+  {
+    "id": 604,
+    "prompt": "Which practical subject has the biggest gap from theory class average?"
+  },
+  {
+    "id": 605,
+    "prompt": "Show a parent-style report: student name, all Annual subjects, %, pass/fail, class position in each subject"
+  },
+  {
+    "id": 606,
+    "prompt": "List coordinators\u2019 questions: missing Annual marks, missing practicals, and teachers with zero appeared"
+  },
+  {
+    "id": 607,
+    "prompt": "Show Class 12 pre-board style summary: overall %, fail subjects, and teacher pass%"
+  },
+  {
+    "id": 608,
+    "prompt": "Find students in position top 3 in school who still have an internal F grade"
+  },
+  {
+    "id": 609,
+    "prompt": "Compare MOCK class% from internal view with Annual class avg from TR_ALL for Physics"
+  },
+  {
+    "id": 610,
+    "prompt": "Show a principal prompt: give me ATKB year 26 Class 10 health card covering strength, pass%, top teachers, and weakest subjects Notes for the NL engine * Keep generated queries read-only. * Map category spelling CATEGROY as it appears in the schema. * Annual/board student cards may live under STUDENT_RESULT_TOTAL or STUDENTS_RESULT_TOTAL (same grain). * Teacher overall % may be served by vTeacher_sum_per or vTeacher_sum_per_BOARD_MIDDLE. * Prompt count: 610. Page 21"
+  }
+]
