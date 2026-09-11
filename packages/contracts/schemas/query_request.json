@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/query_request.json",
+  "title": "QueryRequest",
+  "type": "object",
+  "description": "Natural language query request sent from the browser client directly to the institutional FastAPI backend.",
+  "required": [
+    "prompt"
+  ],
+  "properties": {
+    "prompt": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 1000,
+      "description": "Natural language query prompt submitted by the user",
+      "example": "Show pass percentage by subject for class 10 in MNWB for 2026."
+    },
+    "filters": {
+      "type": "object",
+      "description": "Optional UI-selected filter constraints to refine the query",
+      "properties": {
+        "campus_code": {
+          "type": "string",
+          "pattern": "^[A-Z]{4}$",
+          "description": "Optional campus filter code (must be within user's server-derived campus_scope)",
+          "example": "MNWB"
+        },
+        "academic_year": {
+          "type": "integer",
+          "minimum": 22,
+          "maximum": 26,
+          "description": "Academic year in 2-digit format (22=2022 ... 26=2026)",
+          "example": 26
+        },
+        "class_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12,
+          "description": "Grade level (1 to 12)",
+          "example": 10
+        },
+        "exam_type": {
+          "type": "string",
+          "enum": ["MID_DEC", "ANNUAL", "MOCK"],
+          "description": "Exam category type filter",
+          "example": "MID_DEC"
+        }
+      },
+      "additionalProperties": false
+    },
+    "request_metadata": {
+      "type": "object",
+      "description": "Client runtime metadata for analytics and session tracking",
+      "properties": {
+        "client_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-08-03T12:00:00Z"
+        },
+        "ui_version": {
+          "type": "string",
+          "example": "1.0.0-mvp"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

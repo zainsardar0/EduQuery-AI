@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/error_response.json",
+  "title": "ErrorResponse",
+  "type": "object",
+  "description": "Standardized public error payload for all service endpoints. Omits raw SQL text, stack traces, database credentials, or provider details to prevent disclosure.",
+  "required": [
+    "success",
+    "error_code",
+    "message",
+    "timestamp",
+    "request_id"
+  ],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "const": false,
+      "description": "Always false for error responses"
+    },
+    "error_code": {
+      "type": "string",
+      "enum": [
+        "AUTH_UNAUTHENTICATED",
+        "AUTH_UNAUTHORIZED",
+        "CROSS_CAMPUS_ACCESS_DENIED",
+        "VALIDATION_ERROR",
+        "UNSAFE_QUERY_REJECTED",
+        "NO_DATA_FOUND",
+        "RATE_LIMIT_EXCEEDED",
+        "REQUEST_TIMEOUT",
+        "DEPENDENCY_FAILURE",
+        "INTERNAL_SERVER_ERROR"
+      ],
+      "description": "Stable error classification code",
+      "example": "UNSAFE_QUERY_REJECTED"
+    },
+    "message": {
+      "type": "string",
+      "description": "Safe, user-facing summary message describing the error",
+      "example": "The submitted prompt requested non-read-only data operations which are prohibited."
+    },
+    "details": {
+      "type": "array",
+      "description": "Optional list of non-sensitive validation or contextual error items",
+      "items": {
+        "type": "string"
+      },
+      "example": ["Field 'prompt' must not be empty"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp when the error occurred",
+      "example": "2026-08-03T12:05:10Z"
+    },
+    "request_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique correlation identifier for server log tracing",
+      "example": "9f8e7d6c-5b4a-3f2e-1d0c-9b8a7f6e5d4c"
+    }
+  },
+  "additionalProperties": false
+}

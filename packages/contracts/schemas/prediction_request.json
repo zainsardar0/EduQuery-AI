@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://eduquery.ai/schemas/prediction_request.json",
+  "title": "PredictionRequest",
+  "type": "object",
+  "description": "Request payload for academic risk prediction and feature attribution.",
+  "required": [
+    "target_type",
+    "target_id"
+  ],
+  "properties": {
+    "target_type": {
+      "type": "string",
+      "enum": ["student", "class_section", "campus_cohort"],
+      "description": "Granularity level for the prediction request",
+      "example": "student"
+    },
+    "target_id": {
+      "type": "string",
+      "description": "Identifier for the target entity (e.g. roll number or section identifier)",
+      "example": "SYN_1001"
+    },
+    "campus_code": {
+      "type": "string",
+      "pattern": "^[A-Z]{4}$",
+      "description": "Campus code constraint (validated against server auth_context)",
+      "example": "MNWB"
+    },
+    "academic_year": {
+      "type": "integer",
+      "minimum": 22,
+      "maximum": 26,
+      "example": 26
+    },
+    "prediction_horizon": {
+      "type": "string",
+      "enum": ["next_exam", "annual_board", "graduation_risk"],
+      "default": "annual_board",
+      "example": "annual_board"
+    }
+  },
+  "additionalProperties": false
+}

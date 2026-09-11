@@ -1,0 +1,145 @@
+SET NOCOUNT ON;
+SET XACT_ABORT ON;
+
+IF SCHEMA_ID(N'eduquery_reporting') IS NULL
+    THROW 51000, 'Run 001_contract_control.sql first.', 1;
+
+DECLARE @Wrappers table (ObjectName sysname NOT NULL PRIMARY KEY);
+INSERT @Wrappers (ObjectName) VALUES
+    (N'ALL_COMBINED'),
+    (N'HOUSE_ATTENDANCE_DAILY'),
+    (N'INTERNAL_STUDENT_RESULT_CARD_VIEW'),
+    (N'MARKS'),
+    (N'PRAC'),
+    (N'STUDENTS_ROLL'),
+    (N'STUDENTS_ROLL_INTERNAL_EXAM'),
+    (N'STUDENTS_RESULT_TOTAL'),
+    (N'TR_ALL'),
+    (N'TR2_PRAC'),
+    (N'TR2_THEORY'),
+    (N'vTeacher_sum_per'),
+    (N'vTeacher_sum_per_BOARD_MIDDLE');
+
+DECLARE @ObjectName sysname;
+DECLARE @WrapperSql nvarchar(max);
+DECLARE wrapper_cursor CURSOR LOCAL FAST_FORWARD FOR SELECT ObjectName FROM @Wrappers;
+OPEN wrapper_cursor;
+FETCH NEXT FROM wrapper_cursor INTO @ObjectName;
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    IF OBJECT_ID(N'dbo.' + @ObjectName) IS NULL
+        THROW 51001, 'A required legacy source object is missing.', 1;
+    SET @WrapperSql = N'CREATE OR ALTER VIEW eduquery_reporting.' + QUOTENAME(@ObjectName)
+        + N' AS SELECT * FROM dbo.' + QUOTENAME(@ObjectName) + N';';
+    EXEC sys.sp_executesql @WrapperSql;
+    FETCH NEXT FROM wrapper_cursor INTO @ObjectName;
+END;
+CLOSE wrapper_cursor;
+DEALLOCATE wrapper_cursor;
+
+EXEC(N'
+CREATE OR ALTER VIEW eduquery_reporting.HOF_FRMT_SOURCE_V1 AS
+SELECT
+    T.EID,
+    T.NAME,
+    T.SUBJECT,
+    T.SCHOOL,
+    T.Year,
+    CAST(T.Class AS varchar(10)) + N''/'' + T.Section AS [CLASS/SECTION],
+    T.APPEARED,
+    CAST(ROUND(T.[PASS%], 2) AS decimal(9,2)) AS [PASS%],
+    CASE WHEN T.Class IN (9,10,11,12)
+         THEN CAST(ROUND(A.BOARD_PERCENTAGE, 2) AS decimal(9,2)) END AS [PASS% OF BOARD],
+    T.Position,
+    T.TOTAL_POSITIONS,
+    T.WL AS [WORK LOAD],
+    T.[CLASS AVG],
+    T.Count_90_100 AS [ABOVE 90%],
+    T.Count_80_90 AS [ABOVE 80%],
+    T.Count_70_80 AS [ABOVE 70%],
+    T.Count_60_70 AS [ABOVE 60%],
+    T.Count_50_60 AS [ABOVE 50%],
+    T.Count_40_50 AS [ABOVE 40%],
+    T.Count_0_39 AS [BELOW 40%],
+    CAST(ROUND(CASE WHEN T.APPEARED > 0 THEN 100.0 * T.ABOVE_70 / T.APPEARED END, 2) AS decimal(9,2)) AS [ABOVE 70 %],
+    T.ABOVE_70 AS [ABOVE 70 COUNT],
+    CAST(ROUND(CASE WHEN T.APPEARED > 0 THEN 100.0 * T.BELOW_70 / T.APPEARED END, 2) AS decimal(9,2)) AS [BELOW 70 %],
+    T.BELOW_70 AS [BELOW 70% COUNT],
+    CAST('''' AS varchar(1)) AS REMARKS
+FROM dbo.TR_ALL_IND_POS AS T
+LEFT JOIN dbo.ALL_COMBINED3 AS A
+  ON T.Year = TRY_CONVERT(float, A.Year)
+ AND T.Class = TRY_CONVERT(float, A.Class)
+ AND UPPER(LTRIM(RTRIM(T.Subject))) = UPPER(LTRIM(RTRIM(A.Subject)))
+ AND T.EID = TRY_CONVERT(float, A.EID)
+ AND UPPER(LTRIM(RTRIM(T.School))) = UPPER(LTRIM(RTRIM(A.School)))
+ AND UPPER(LTRIM(RTRIM(T.Section))) = UPPER(LTRIM(RTRIM(A.Section)))
+ AND T.Class IN (9,10,11,12);
+');
+
+EXEC(N'
+CREATE OR ALTER VIEW eduquery_reporting.INTERNAL_STUDENT_GRAIN_CONFLICTS_V1 AS
+SELECT SCHOOL, SMSNO, ROLLNO, CLASS, YEAR, EXAM, COUNT_BIG(*) AS DuplicateRows
+FROM dbo.STUDENTS_ROLL_INTERNAL_EXAM
+GROUP BY SCHOOL, SMSNO, ROLLNO, CLASS, YEAR, EXAM
+HAVING COUNT(DISTINCT ISNULL(STUDENT, '''')) > 1
+    OR COUNT(DISTINCT ISNULL(FATHER, '''')) > 1
+    OR COUNT(DISTINCT ISNULL(SECTION, '''')) > 1;
+');
+
+EXEC(N'
+CREATE OR ALTER VIEW eduquery_reporting.STUDENTS_RESULT_TOTAL_INTERNAL_V2 AS
+WITH StudentGrain AS (
+    SELECT
+        SCHOOL, [GROUP], SMSNO, ROLLNO, CLASS, SECTION, CATEGORY, YEAR, EXAM,
+        MAX(STUDENT) AS STUDENT,
+        MAX(FATHER) AS FATHER
+    FROM dbo.STUDENTS_ROLL_INTERNAL_EXAM
+    GROUP BY SCHOOL, [GROUP], SMSNO, ROLLNO, CLASS, SECTION, CATEGORY, YEAR, EXAM
+    HAVING COUNT(DISTINCT ISNULL(STUDENT, '''')) <= 1
+       AND COUNT(DISTINCT ISNULL(FATHER, '''')) <= 1
+), SubjectRows AS (
+    SELECT
+        S.SCHOOL, S.STUDENT, S.FATHER, S.CLASS, S.SECTION, S.CATEGORY,
+        S.YEAR, S.SMSNO, S.ROLLNO, S.EXAM, M.SUBJECT,
+        CONVERT(float, M.OBTAINED) AS OBTAINED,
+        CONVERT(float, M.TOTAL) AS TOTAL,
+        ROUND(100.0 * CONVERT(float, M.OBTAINED) / NULLIF(CONVERT(float, M.TOTAL), 0), 2) AS [%],
+        CASE
+            WHEN R.RuleId IS NULL THEN ''RULE_MISSING''
+            WHEN 100.0 * CONVERT(float, M.OBTAINED) / NULLIF(CONVERT(float, M.TOTAL), 0) > R.PassPercentageExclusive THEN ''PASS''
+            ELSE ''FAIL''
+        END AS STATUS,
+        S.[GROUP]
+    FROM StudentGrain AS S
+    INNER JOIN dbo.MARKS_INTERNAL AS M
+      ON TRY_CONVERT(int, S.ROLLNO) = M.ROLLNO
+     AND TRY_CONVERT(int, S.CLASS) = M.CLASS
+     AND S.YEAR = M.YEAR
+     AND UPPER(LTRIM(RTRIM(S.EXAM))) = UPPER(LTRIM(RTRIM(M.EXAMTYPE)))
+    OUTER APPLY (
+        SELECT TOP (1) P.RuleId, P.PassPercentageExclusive
+        FROM eduquery_reporting.PassThresholdRule AS P
+        WHERE P.IsActive = 1
+          AND TRY_CONVERT(int, S.CLASS) BETWEEN P.ClassFrom AND P.ClassTo
+          AND S.YEAR BETWEEN P.YearFrom AND P.YearTo
+        ORDER BY (P.ClassTo - P.ClassFrom), (P.YearTo - P.YearFrom), P.RuleId
+    ) AS R
+)
+SELECT SCHOOL, STUDENT, FATHER, CLASS, SECTION, CATEGORY, YEAR, SMSNO, ROLLNO,
+       EXAM, SUBJECT, OBTAINED, TOTAL, [%], STATUS, [GROUP]
+FROM SubjectRows
+UNION ALL
+SELECT
+    SCHOOL, STUDENT, FATHER, CLASS, SECTION, CATEGORY, YEAR, SMSNO, ROLLNO,
+    EXAM, ''TOTAL'', SUM(OBTAINED), SUM(TOTAL),
+    ROUND(100.0 * SUM(OBTAINED) / NULLIF(SUM(TOTAL), 0), 2),
+    CASE
+        WHEN MAX(CASE WHEN STATUS = ''RULE_MISSING'' THEN 1 ELSE 0 END) = 1 THEN ''RULE_MISSING''
+        WHEN MIN(CASE WHEN STATUS = ''PASS'' THEN 1 ELSE 0 END) = 1 THEN ''PASS''
+        ELSE STRING_AGG(CONVERT(nvarchar(max), CASE WHEN STATUS = ''FAIL'' THEN SUBJECT END), N''-'')
+    END,
+    [GROUP]
+FROM SubjectRows
+GROUP BY SCHOOL, STUDENT, FATHER, CLASS, SECTION, CATEGORY, YEAR, SMSNO, ROLLNO, EXAM, [GROUP];
+');
