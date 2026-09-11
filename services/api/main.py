@@ -1,10 +1,12 @@
 import datetime
+import os
 import time
 import uuid
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from packages.contracts.error import ErrorCode, ErrorResponse
@@ -134,14 +136,31 @@ app.include_router(legacy_policy_router.router)
 app.include_router(legacy_prediction_router.router)
 
 
-@app.get("/", tags=["Health"])
-async def root():
-    return {
-        "status": "ok",
-        "service": settings.PROJECT_NAME,
-        "version": settings.VERSION,
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
-    }
+# 6. Mount Built React Frontend Static Assets (if apps/web/dist exists)
+_dist_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "apps", "web", "dist")
+if not os.path.exists(_dist_dir):
+    _dist_dir = os.path.join(os.getcwd(), "apps", "web", "dist")
+
+if os.path.exists(_dist_dir):
+    _assets_dir = os.path.join(_dist_dir, "assets")
+    if os.path.exists(_assets_dir):
+        app.mount("/assets", StaticFiles(directory=_assets_dir), name="assets")
+
+    @app.get("/", tags=["UI"], include_in_schema=False)
+    async def serve_spa_index():
+        index_file = os.path.join(_dist_dir, "index.html")
+        if os.path.exists(index_file):
+            return FileResponse(index_file)
+        return JSONResponse({"status": "ok", "service": settings.PROJECT_NAME})
+else:
+    @app.get("/", tags=["Health"])
+    async def root():
+        return {
+            "status": "ok",
+            "service": settings.PROJECT_NAME,
+            "version": settings.VERSION,
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+        }
 
 
 @app.get("/healthz", tags=["Health"])
