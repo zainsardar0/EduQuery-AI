@@ -1,0 +1,670 @@
+@import 'tailwindcss';
+
+/*
+  EduQuery AI — visual system
+
+  Cool off-white canvas, pure-white cards, near-black headings over grey body,
+  one accent used only as a surface. Type metrics and motion values follow the
+  reference audit: headlines at medium weight (size supplies the mass), tracking
+  corrected optically at both ends of the scale, line height inverse to size.
+*/
+@theme {
+  /*
+    These are the light end of every ramp — the values the page holds at the
+    top and the values the product UI at #/app uses permanently. The base
+    layer below redefines each one as a function of scroll; declaring them
+    here is what makes Tailwind emit the bg-canvas / text-ink / border-line
+    utilities in the first place.
+  */
+  --color-canvas: #f4f5f8;
+  --color-surface: #ffffff;
+  --color-surface-2: #f7f8fa;
+  --color-surface-3: #e4e7ec;
+
+  /* Never pure black. ~18:1 on canvas is plenty and reads as chosen. */
+  --color-ink: #0c0d0f;
+  --color-ink-2: #47494c;
+  --color-ink-3: #585a5d;
+
+  --color-line: #e2e4e8;
+  --color-line-2: #cfd2d8;
+
+  /* Primary control: ink-coloured plate, canvas-coloured label. */
+  --color-btn: #0c0d0f;
+  --color-on-btn: #ffffff;
+
+  /* The one accent, with one job. Surfaces and dots only — never text.
+     Fixed, not on the ramp: it is the anchor the evolving field is read
+     against, and anything sitting ON it needs a fixed foreground too. */
+  --color-lime: #d3f84e;
+  --color-lime-2: #c2eb3a;
+  --color-on-accent: #0c0d0f;
+
+  /*
+    The restrained accent set, straight from the reference palette — a soft
+    lavender-grey, warm peach, and pale sky blue alongside the existing lime.
+    Fixed, exactly like lime: they read as small badges and icon plates
+    scattered through the lower sections, on light ground or dark, never as
+    text and never as a large fill. --color-accent-sky-deep is the one
+    departure — the pale swatch blue at button strength, same hue, for the
+    one place (the login page's primary action) a pastel fill would not read
+    as clickable.
+  */
+  --color-accent-mauve: #d6d3da;
+  --color-accent-peach: #e3c7ab;
+  --color-accent-sky: #bfddff;
+  --color-accent-sky-deep: #3a85d9;
+  --color-accent-sky-deep-2: #2673c9;
+
+  /*
+    Same-hue, button/chart strength variants of mauve and peach — the
+    Prediction analytics grid needs a small working set of data colours, and
+    it is restricted to this reference palette too, so it draws on these
+    rather than reaching for an unrelated hue. mauve-deep stands in for
+    "trend/secondary", peach-deep and peach-deep-2 for "caution" and "high
+    risk" — the palette has no red, so intensity carries what hue would
+    otherwise.
+  */
+  --color-accent-mauve-deep: #7e54b6;
+  --color-accent-peach-deep: #c28547;
+  --color-accent-peach-deep-2: #89521a;
+
+  /* Semantic colour lives inside product UI only, never in marketing chrome.
+     Seeds only — the base layer derives all four from the ink and the field. */
+  --color-positive: #3f6a1f;
+  --color-positive-wash: #e3ecdc;
+  --color-alert: #8f3a24;
+  --color-alert-wash: #f2e4e0;
+
+  /*
+    Fixed dark panel — the sidebar only.
+    Deep pine green and its active nav-item state.
+  */
+  --color-panel: #003d1c;
+  --color-panel-2: #2f6b46;
+  --color-panel-line: rgba(255, 255, 255, 0.1);
+  --color-on-panel: #f2f4f6;
+  --color-on-panel-2: #a9c4b3;
+
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --radius-xl: 32px;
+  --radius-lg: 20px;
+  --radius-md: 12px;
+
+  /* ease-out-quint — entrances */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-hover: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-card: 0 1px 2px rgba(12, 13, 15, 0.04), 0 8px 24px -12px rgba(12, 13, 15, 0.1);
+  --shadow-lift: 0 2px 6px rgba(12, 13, 15, 0.06), 0 28px 56px -20px rgba(12, 13, 15, 0.2);
+  --shadow-float: 0 28px 64px -22px rgba(12, 13, 15, 0.28);
+}
+
+/*
+  Registered so it can be transitioned. An unregistered custom property is just
+  a token to the engine and jumps; --tp has to interpolate, because it is the
+  one value on the page that changes discontinuously (see below).
+*/
+@property --tp {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+@layer base {
+  /*
+    ONE CONTINUOUS COLOUR FIELD
+    ===========================
+
+    There are no light sections and no dark sections. The document is a single
+    field whose colour evolves with scroll, and every band simply sits on
+    whatever that colour currently is. It is not one-way: the field rises from
+    light to a charcoal dark quickly near the top, holds there through the
+    whole body of the page, and eases back to light again before the page
+    ends — a held plateau (a "mesa"), not a ramp that only ever gets darker.
+    Redefining the design tokens here as functions of scroll — rather than
+    adding scroll-aware classes — is what makes every utility already in the
+    markup follow along for free. This layer wins over @theme because
+    Tailwind orders base after theme.
+
+    Four inputs, all published by useScrollProgress:
+
+      --p   0 → 1   field progress. Drives every surface and every border.
+      --e   1 → 0   elevation strength. See "the pivot" below.
+      --b   0 → 1   contrast boost near the pivot.
+      --tp  0 | 1   text polarity. Discrete, and the only discrete value here.
+
+    THE PIVOT, AND WHY --tp CANNOT BE CONTINUOUS
+    -------------------------------------------
+    Text contrast is a function of the distance in luminance between the text
+    and its ground. Light-on-dark and dark-on-light sit on opposite sides of
+    the line "text and ground are the same luminance", so ANY continuous path
+    between them crosses that line, and on it contrast is 1:1. An earlier
+    revision crossfaded the text with a steep curve and measured 1.67:1
+    mid-page — unreadable, and not fixable by re-tuning the curve, because the
+    failure is in the topology rather than the timing.
+
+    So the text flips instead of fading, at the scroll position where the
+    field's luminance is 0.179 — the value at which pure black and pure white
+    score identically, 4.58:1 each. That is the best worst case the range
+    contains, and it is reached rather than approached. Because the field is a
+    mesa now, not a one-way ramp, this position is crossed TWICE — once on the
+    way into the dark middle of the page, once on the way back out of it — and
+    everything below is written in terms of the field's current LUMINANCE, not
+    which direction it is currently moving, so the same handling applies both
+    times without extra cases:
+
+      * --b opens the ink to true #000 / #fff as the pivot is neared, and
+        closes the gap between the three text tiers. That skirt is long on
+        purpose. A mid-grey ground caps the contrast available to ALL text at
+        roughly 7.5:1, so three distinct greys cannot each hold 4.5:1 out
+        there; they have to converge while the budget is thin and re-open at
+        both ends where there is room.
+
+      * --e collapses elevation to zero across the pivot. A card is lighter
+        than the field, and two straight ramps that differ at the top must
+        differ at the bottom too — so left alone the card reaches 0.179 at a
+        different scroll position than the field does, and for the stretch
+        between them some surface is mid-grey whichever way the text is set.
+        Flattening every surface onto the field bends the card's ramp so the
+        entire document crosses the pivot at one instant. Elevation returns
+        asymmetrically around each crossing: quickly on the light side,
+        slowly on the dark one, because a raised — lighter — surface is the
+        first thing to fail once the ground is dark. Cards stay legible as
+        objects throughout, via their border and shadow.
+
+    The flip itself is a 260ms colour transition: the same event, and the same
+    momentary crossing, as a light/dark theme toggle — now one that can happen
+    twice on a single scroll session. Static contrast either side of it is
+    measured, not assumed — scripts/contrast.mjs walks every text token
+    against every ground at 501 scroll positions, plus the pills that carry
+    their own ground. Nothing drops below 4.5:1.
+  */
+  :root {
+    --p: 0;
+    --e: 1;
+    --b: 0;
+
+    /*
+      The field, plus the three elevations expressed as their own ramps. Each
+      ramp runs from its light value to its dark value; --e then decides how
+      much of that separation from the field is actually applied.
+
+      The ladder holds its ORDER at both ends, which the earlier palette did
+      not: it inherited "surface-3 is a recessed tone on a white section", and
+      once white sections stopped existing that tone ended up below the field
+      at the top of the page and above it at the bottom, so the same card read
+      as sunk in one place and raised in another. Now:
+
+          sunk  <  field  <  panel  <  card        at the light end
+          sunk  <  field  <  panel  <  card        at the dark end
+
+      Elevation always means "further from the field in the same direction".
+    */
+    --field: color-mix(in oklab, #f4f5f8, #34363c calc(var(--p) * 100%));
+    --lift-1: color-mix(in oklab, #ffffff, #45474e calc(var(--p) * 100%));
+    --lift-2: color-mix(in oklab, #f7f8fa, #3c3e44 calc(var(--p) * 100%));
+    --lift-3: color-mix(in oklab, #e4e7ec, #2a2c31 calc(var(--p) * 100%));
+
+    --color-canvas: var(--field);
+    --color-surface: color-mix(in oklab, var(--field), var(--lift-1) calc(var(--e) * 100%));
+    --color-surface-2: color-mix(in oklab, var(--field), var(--lift-2) calc(var(--e) * 100%));
+    --color-surface-3: color-mix(in oklab, var(--field), var(--lift-3) calc(var(--e) * 100%));
+
+    /* The two poles the text switches between, opened to true black and true
+       white exactly where the ground is least forgiving. */
+    --ink-lo: color-mix(in oklab, #0c0d0f, #000000 calc(var(--b) * 100%));
+    --ink-hi: color-mix(in oklab, #f2f4f6, #ffffff calc(var(--b) * 100%));
+
+    --color-ink: color-mix(in oklab, var(--ink-lo), var(--ink-hi) calc(var(--tp) * 100%));
+
+    /*
+      Secondary and tertiary copy are a fixed perceptual step from the ink
+      toward the ground, so they track the inversion automatically and give up
+      that step near the pivot instead of giving up legibility.
+
+      The step is taken toward whichever ground is hardest to read on right
+      now — the deepest surface while the text is dark, the highest one once it
+      is light. Aiming at the worst case makes it a number chosen here rather
+      than one that falls out of whichever surface happened to be furthest
+      from the field.
+
+      The step is also smaller once the text is light on dark. Contrast ratio
+      is not symmetric about the pivot: the +0.05 flare term in the WCAG
+      formula dominates on dark grounds, so the same perceptual step that reads
+      as a quiet grey on white crushes the ratio on charcoal.
+    */
+    --worst-ground: color-mix(
+      in oklab,
+      var(--color-surface-3),
+      var(--color-surface) calc(var(--tp) * 100%)
+    );
+    --soft-2: calc((1 - var(--b)) * (32% - var(--tp) * 15%));
+    --soft-3: calc((1 - var(--b)) * (38% - var(--tp) * 20%));
+    --color-ink-2: color-mix(in oklab, var(--color-ink), var(--worst-ground) var(--soft-2));
+    --color-ink-3: color-mix(in oklab, var(--color-ink), var(--worst-ground) var(--soft-3));
+
+    /*
+      Semantic colour is a TINT OF THE INK, not a fixed pair of hexes. A fixed
+      #b23a1e is a perfectly good "below target" red on white and a 1.6:1
+      smudge on charcoal, and every one of these appears inside the demo panels
+      that ride the whole ramp. Tinting the ink instead means they inherit the
+      contrast guarantee above, invert on their own, and — through the same
+      (1 - b) term as the grey tiers — give up their colour rather than their
+      legibility where the field is mid-grey and the budget is thinnest.
+    */
+    --tint: calc((1 - var(--b)) * 40%);
+    --color-positive: color-mix(in oklab, var(--color-ink), #7ab52a var(--tint));
+    --color-alert: color-mix(in oklab, var(--color-ink), #e05a35 var(--tint));
+    --tint-wash: calc((1 - var(--b)) * 12%);
+    --color-positive-wash: color-mix(in oklab, var(--color-surface-2), #7ab52a var(--tint-wash));
+    --color-alert-wash: color-mix(in oklab, var(--color-surface-2), #e05a35 var(--tint-wash));
+
+    /* Hairlines are defined against the surface they divide, so they stay a
+       visible step even where every surface has flattened onto the field. */
+    --color-line: color-mix(in oklab, var(--color-surface), var(--color-ink) 11%);
+    --color-line-2: color-mix(in oklab, var(--color-surface), var(--color-ink) 21%);
+
+    /* The primary control is ink-on-page inverted: it is always the opposite
+       pole from the body text, so it never sinks into the field. */
+    --color-btn: var(--color-ink);
+    --color-on-btn: color-mix(in oklab, var(--ink-hi), var(--ink-lo) calc(var(--tp) * 100%));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-canvas);
+    transition: --tp 260ms var(--ease-hover);
+  }
+
+  body {
+    background-color: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+    Medium weight, not bold. Above ~40px, size already supplies the mass and
+    extra weight only makes the headline shout. Tracking tightens as size
+    grows; line height falls so multi-line headings cohere as one object.
+  */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+  }
+
+  h1 {
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+
+  h2 {
+    letter-spacing: -0.028em;
+    line-height: 1.1;
+  }
+
+  h3 {
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  h4 {
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Marks, percentages and roll numbers must not jitter between rows. */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-lime);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /*
+    The accent is the one surface that does NOT ride the field — it is the
+    fixed thing the evolving page is read against. So anything sitting on it
+    needs a fixed foreground too, and past the pivot --color-ink is white,
+    which on lime is about 1.5:1.
+
+    Re-anchoring the tokens on the accent surface itself fixes every descendant
+    at once, because custom properties inherit. The alternative — auditing a
+    dozen call sites for `text-ink` inside `bg-lime` — is the same fix written
+    twelve times and forgotten on the thirteenth.
+  */
+  .bg-lime,
+  .bg-lime-2 {
+    --color-ink: var(--color-on-accent);
+    --color-ink-2: color-mix(in oklab, var(--color-on-accent), var(--color-lime) 34%);
+    --color-ink-3: color-mix(in oklab, var(--color-on-accent), var(--color-lime) 46%);
+    --color-line: color-mix(in oklab, var(--color-lime), var(--color-on-accent) 16%);
+    --color-line-2: color-mix(in oklab, var(--color-lime), var(--color-on-accent) 28%);
+    --color-btn: var(--color-on-accent);
+    --color-on-btn: var(--color-lime);
+  }
+
+  /* Section label: soft capsule with a small icon. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
+    padding: 0.5rem 0.9rem 0.5rem 0.7rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--color-ink-2);
+  }
+
+  /* Large numeral with a small grey unit riding beside it. */
+  .figure {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+  }
+
+  .figure-unit {
+    font-size: 0.5em;
+    font-weight: 500;
+    color: var(--color-ink-3);
+    letter-spacing: -0.02em;
+    margin-left: 0.12em;
+  }
+
+  /*
+    Masked label roll. The button holds two identical labels stacked; on hover
+    the stack translates up by exactly one label height, so the label reads as
+    rolling over on itself rather than being swapped. Costs one duplicated
+    string and a transform, and gives the control physical mass.
+  */
+  .roll {
+    position: relative;
+    display: grid;
+    overflow: hidden;
+    /* 1lh keeps the travel pixel-exact at any font size. */
+    height: 1lh;
+  }
+
+  .roll > span {
+    grid-area: 1 / 1;
+    transition: transform 320ms var(--ease-out-quint);
+  }
+
+  .roll > span:last-child {
+    transform: translateY(100%);
+  }
+
+  .group:hover .roll > span:first-child {
+    transform: translateY(-100%);
+  }
+
+  .group:hover .roll > span:last-child {
+    transform: translateY(0);
+  }
+
+  /* Asymmetric timing: fast in, graceful out. Two properties, never three. */
+  .card-hover {
+    transition:
+      transform 420ms var(--ease-hover),
+      box-shadow 420ms var(--ease-hover);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    transition-duration: 200ms;
+  }
+
+  .press:active {
+    transform: scale(0.98);
+  }
+
+  /*
+    Tile: a panel that reads through its rim rather than through a shadow. Used
+    where tiles sit edge to edge in a grid, and once the field is dark it is the
+    only thing that still works — a near-black shadow on a near-black ground is
+    invisible, while a hairline is not.
+
+    Hover raises it one step, to the card level. It used to drop to surface-3,
+    which in the old palette was "one shade darker" and in this one is a well
+    cut BELOW the field, so the tile appeared to fall through the page.
+  */
+  .tile {
+    background-color: var(--color-surface-2);
+    border: 1px solid var(--color-line);
+    transition:
+      background-color 260ms var(--ease-hover),
+      border-color 260ms var(--ease-hover),
+      transform 420ms var(--ease-hover),
+      box-shadow 420ms var(--ease-hover);
+  }
+
+  .tile:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-line-2);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card);
+    transition-duration: 200ms;
+  }
+
+  /*
+    Scroll reveal. Opacity is always paired with a transform — opacity alone
+    reads as a dimmer switch rather than as arrival. The slight scale is
+    subliminal but it is what makes a card read as an object rather than a
+    rectangle.
+  */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    transition:
+      opacity 800ms var(--ease-out-quint),
+      transform 800ms var(--ease-out-quint);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: transform, opacity;
+  }
+
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  }
+
+  /* Masked line rise: the line arrives from behind an edge rather than
+     fading through empty space. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+  }
+
+  .line-mask > span {
+    display: block;
+    transform: translateY(105%);
+    transition: transform 800ms var(--ease-out-quint);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .line-mask.is-in > span {
+    transform: none;
+  }
+
+  /*
+    Warm bloom. It appears three times — hero, demo, closing CTA — so it has to
+    ride the field like everything else: an opaque sand wash at the top, the
+    same wash at low opacity over a dark ground at the bottom. Every stop fades
+    to its OWN colour at zero alpha rather than to `transparent`, which is
+    transparent BLACK and would drag a grey haze through the midpoints.
+  */
+  .glow-sand {
+    /* Gone by p = 0.71. Past that the page is dark enough that a warm wash
+       would read as a light rectangle stuck on the field, which is exactly the
+       hard-edged block this design exists to get rid of. rgb() clamps alpha,
+       so the negative values below simply resolve to zero. */
+    --bloom: calc(1 - var(--p) * 1.4);
+
+    background-color: var(--color-canvas);
+    background-image:
+      radial-gradient(58% 62% at 17% 26%, rgb(233 200 162 / var(--bloom)), rgb(233 200 162 / 0) 70%),
+      radial-gradient(
+        52% 54% at 85% 58%,
+        rgb(206 173 140 / calc(var(--bloom) * 0.92)),
+        rgb(206 173 140 / 0) 72%
+      ),
+      radial-gradient(
+        64% 52% at 58% 4%,
+        rgb(222 226 234 / calc(var(--bloom) * 0.86)),
+        rgb(222 226 234 / 0) 70%
+      ),
+      /* The base wash carries the bloom's own edges. It fades to nothing at the
+         top and the bottom so the block dissolves into the field instead of
+         ending on a line — the hero and the closing CTA are both full-bleed,
+         and a flat fill there draws a rule straight across the page. */
+      linear-gradient(
+        to bottom,
+        rgb(210 216 226 / 0) 0%,
+        rgb(210 216 226 / var(--bloom)) 20%,
+        rgb(207 213 224 / calc(var(--bloom) * 0.82)) 62%,
+        rgb(204 211 222 / 0) 100%
+      );
+  }
+
+  /*
+    A stronger lift than .tile's, reserved for the question grid — bigger
+    travel, a touch of scale, and a longer settle so it reads as the card
+    genuinely floating off the page rather than just nudging up. Kept as its
+    own class rather than widening .tile everywhere it's used: this amount of
+    motion is right for a light, scannable card grid and would be too much
+    for denser content like the security/outcomes cards.
+  */
+  .tile-float {
+    transition:
+      transform 420ms var(--ease-out-quint),
+      box-shadow 420ms var(--ease-out-quint),
+      border-color 300ms var(--ease-hover),
+      background-color 260ms var(--ease-hover);
+  }
+
+  .tile-float:hover {
+    transform: translateY(-7px) scale(1.015);
+    border-color: var(--color-line-2);
+    transition-duration: 260ms;
+  }
+
+  /* Marquee: constant linear velocity, edges masked to the page colour. */
+  .marquee {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 8%,
+      black 92%,
+      transparent
+    );
+  }
+
+  .marquee-track {
+    animation: marquee 48s linear infinite;
+    will-change: transform;
+  }
+
+  /*
+    The login screen's immersive panel. Fixed-dark, not on the colour field —
+    an authentication screen is a workspace, not a narrative — built from
+    blurred, drifting colour fields rather than an actual video asset, so
+    there is nothing to lazy-load and nothing that can jank the scroll.
+  */
+  .auth-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(64px);
+    mix-blend-mode: screen;
+    animation: orb-drift 22s ease-in-out infinite;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .tile {
+    transition: none;
+  }
+  .line-mask > span {
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Exactly one copy's width; any rounding error stutters once per cycle. */
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes blink-caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+}
+
+@keyframes orb-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(4%, -6%) scale(1.08);
+  }
+  66% {
+    transform: translate(-5%, 4%) scale(0.96);
+  }
+}
