@@ -1,0 +1,113 @@
+{
+  "campuses": ["MNWB", "MNWG", "KRA", "ATK"],
+  "classes": [9, 10, 11, 12],
+  "academic_years": [24, 25, 26],
+  "subjects": ["Mathematics", "English", "Physics", "Chemistry", "Computer Science"],
+  "exam_performance": [
+    {
+      "campus_code": "MNWB",
+      "class_level": 10,
+      "academic_year": 26,
+      "exam_type": "MID_DEC",
+      "subject": "Mathematics",
+      "total_students": 150,
+      "pass_percentage": 92.0,
+      "average_marks": 78.5
+    },
+    {
+      "campus_code": "MNWB",
+      "class_level": 10,
+      "academic_year": 26,
+      "exam_type": "MID_DEC",
+      "subject": "English",
+      "total_students": 150,
+      "pass_percentage": 85.0,
+      "average_marks": 72.0
+    },
+    {
+      "campus_code": "MNWB",
+      "class_level": 10,
+      "academic_year": 26,
+      "exam_type": "MID_DEC",
+      "subject": "Physics",
+      "total_students": 150,
+      "pass_percentage": 88.5,
+      "average_marks": 75.0
+    },
+    {
+      "campus_code": "MNWG",
+      "class_level": 10,
+      "academic_year": 26,
+      "exam_type": "MID_DEC",
+      "subject": "Mathematics",
+      "total_students": 120,
+      "pass_percentage": 89.0,
+      "average_marks": 74.5
+    }
+  ],
+  "sample_predictions": {
+    "SYN_1001": {
+      "target_id": "SYN_1001",
+      "campus_code": "MNWB",
+      "risk_level": "HIGH",
+      "predicted_score": 42.5,
+      "confidence_lower": 38.0,
+      "confidence_upper": 47.0,
+      "model_name": "Optuna_Tuned_HistGBM_Student_Predictor",
+      "model_version": "2.4.1",
+      "mlflow_run_id": "run_prod_optuna_histgbm",
+      "evaluated_at": "2026-08-03T12:00:00Z",
+      "feature_attributions": [
+        {
+          "feature_name": "mid_dec_math_marks",
+          "display_name": "Mid-Dec Math Marks",
+          "shap_value": -12.4,
+          "impact_direction": "INCREASES_RISK",
+          "value_observed": 28.0
+        },
+        {
+          "feature_name": "house_attendance_pct",
+          "display_name": "House Attendance Rate",
+          "shap_value": -8.5,
+          "impact_direction": "INCREASES_RISK",
+          "value_observed": 64.0
+        },
+        {
+          "feature_name": "class_test_average",
+          "display_name": "Class Test Average",
+          "shap_value": 3.2,
+          "impact_direction": "DECREASES_RISK",
+          "value_observed": 55.0
+        }
+      ]
+    },
+    "SYN_1002": {
+      "target_id": "SYN_1002",
+      "campus_code": "MNWB",
+      "risk_level": "LOW",
+      "predicted_score": 88.0,
+      "confidence_lower": 84.0,
+      "confidence_upper": 92.0,
+      "model_name": "Optuna_Tuned_HistGBM_Student_Predictor",
+      "model_version": "2.4.1",
+      "mlflow_run_id": "run_prod_optuna_histgbm",
+      "evaluated_at": "2026-08-03T12:00:00Z",
+      "feature_attributions": [
+        {
+          "feature_name": "mid_dec_math_marks",
+          "display_name": "Mid-Dec Math Marks",
+          "shap_value": 14.2,
+          "impact_direction": "DECREASES_RISK",
+          "value_observed": 90.0
+        },
+        {
+          "feature_name": "house_attendance_pct",
+          "display_name": "House Attendance Rate",
+          "shap_value": 6.8,
+          "impact_direction": "DECREASES_RISK",
+          "value_observed": 96.0
+        }
+      ]
+    }
+  }
+}

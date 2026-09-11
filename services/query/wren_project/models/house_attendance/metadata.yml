@@ -1,0 +1,14 @@
+name: house_attendance
+properties:
+  description: Daily student attendance events grouped by live campus and house.
+table_reference:
+  schema: dbo
+  table: House_Attendance_Daily
+primary_key: attendance_id
+columns:
+  - { name: attendance_id, expression: AttID, type: integer }
+  - { name: campus, expression: School, type: varchar }
+  - { name: student_reference, expression: SMSNO, type: varchar }
+  - { name: house, expression: House, type: varchar }
+  - { name: attendance_date, expression: AttDate, type: date }
+  - { name: status, expression: Status, type: varchar }

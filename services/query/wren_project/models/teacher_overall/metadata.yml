@@ -1,0 +1,14 @@
+name: teacher_overall
+properties: { description: Teacher overall obtained, total, and percentage by class and subject. }
+table_reference: { schema: dbo, table: vTeacher_sum_per }
+columns:
+  - { name: teacher_id, expression: EID, type: double }
+  - { name: teacher_name, expression: NAME, type: varchar }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: school_year, expression: YEAR, type: double }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: sum_obtained, expression: SumObtained, type: double }
+  - { name: sum_total, expression: SumTotal, type: double }
+  - { name: percentage, expression: '"%"', type: double }

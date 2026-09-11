@@ -1,0 +1,25 @@
+name: practical_teacher_results
+properties: { description: Teacher-level practical result summaries and percentage bands. }
+table_reference: { schema: dbo, table: TR2_Prac }
+columns:
+  - { name: teacher_id, expression: EID, type: double }
+  - { name: teacher_name, expression: NAME, type: varchar }
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: exam_type, expression: EXAMTYPE, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: class_level, expression: CLASS, type: double }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: school_year, expression: Year, type: double }
+  - { name: category, expression: CATEGROY, type: varchar }
+  - { name: strength, expression: STRENGTH, type: integer }
+  - { name: count_90_100, expression: Count_90_100, type: integer }
+  - { name: count_80_90, expression: Count_80_90, type: integer }
+  - { name: count_70_80, expression: Count_70_80, type: integer }
+  - { name: count_60_70, expression: Count_60_70, type: integer }
+  - { name: count_50_60, expression: Count_50_60, type: integer }
+  - { name: count_40_50, expression: Count_40_50, type: integer }
+  - { name: count_0_39, expression: Count_0_39, type: integer }
+  - { name: appeared, expression: APPEARED, type: integer }
+  - { name: passed, expression: PASSED, type: integer }
+  - { name: pass_percentage, expression: '"PASS%"', type: double }
+  - { name: class_average, expression: '"CLASS AVG"', type: double }

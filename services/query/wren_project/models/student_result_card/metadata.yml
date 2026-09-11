@@ -1,0 +1,22 @@
+name: student_result_card
+properties:
+  description: Subject-level internal examination result card for a locally identified student.
+table_reference:
+  schema: dbo
+  table: INTERNAL_STUDENT_RESULT_CARD_VIEW
+columns:
+  - { name: campus, expression: SCHOOL, type: varchar }
+  - { name: roll_number, expression: ROLLNO, type: varchar }
+  - { name: student_reference, expression: SMSNO, type: varchar }
+  - { name: student_name, expression: '"STUDENT NAME"', type: varchar }
+  - { name: class_level, expression: CLASS, type: varchar }
+  - { name: section, expression: SECTION, type: varchar }
+  - { name: school_year, expression: YEAR, type: integer }
+  - { name: house, expression: HOUSE, type: varchar }
+  - { name: exam_type, expression: EXAM, type: varchar }
+  - { name: subject, expression: SUBJECT, type: varchar }
+  - { name: total_marks, expression: TOTAL, type: integer }
+  - { name: obtained_marks, expression: OBTAINED, type: decimal }
+  - { name: percentage, expression: PERCENTAGE, type: decimal }
+  - { name: grade, expression: GRADE, type: varchar }
+  - { name: result_status, expression: STATUS, type: varchar }

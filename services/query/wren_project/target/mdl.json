@@ -1,0 +1,1363 @@
+{
+  "catalog": "wren",
+  "schema": "public",
+  "models": [
+    {
+      "name": "annual_student_results",
+      "properties": {
+        "description": "Board and annual student result-card rows including subject and authoritative TOTAL rows."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "STUDENTS_RESULT_TOTAL"
+      },
+      "columns": [
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "student_name",
+          "expression": "STUDENT",
+          "type": "varchar"
+        },
+        {
+          "name": "father_name",
+          "expression": "FATHER",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "integer"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "double"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "obtained_marks",
+          "expression": "OBTAINED",
+          "type": "double"
+        },
+        {
+          "name": "total_marks",
+          "expression": "TOTAL",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        },
+        {
+          "name": "result_status",
+          "expression": "STATUS",
+          "type": "varchar"
+        },
+        {
+          "name": "group_name",
+          "expression": "\"GROUP\"",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "board_enrollment",
+      "properties": {
+        "description": "Board and annual student enrollment records supplied for the Daanish gold-prompt catalog."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "STUDENTS_ROLL"
+      },
+      "primaryKey": "id",
+      "columns": [
+        {
+          "name": "id",
+          "expression": "ID",
+          "type": "integer"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "group_name",
+          "expression": "\"GROUP\"",
+          "type": "varchar"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "integer"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "double"
+        },
+        {
+          "name": "student_name",
+          "expression": "STUDENT",
+          "type": "varchar"
+        },
+        {
+          "name": "father_name",
+          "expression": "FATHER",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "name": "board_marks",
+      "properties": {
+        "description": "Subject-level board and annual marks."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "MARKS"
+      },
+      "primaryKey": "id",
+      "columns": [
+        {
+          "name": "id",
+          "expression": "ID",
+          "type": "integer"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "obtained_marks",
+          "expression": "OBTAINED",
+          "type": "double"
+        },
+        {
+          "name": "total_marks",
+          "expression": "TOTAL",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        },
+        {
+          "name": "grade",
+          "expression": "GRADE",
+          "type": "varchar"
+        },
+        {
+          "name": "result_status",
+          "expression": "STATUS",
+          "type": "varchar"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "double"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "consolidated_results",
+      "properties": {
+        "description": "Student-level total academic outcomes selected from authoritative pre-aggregated TOTAL result rows."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "students_result_total"
+      },
+      "columns": [
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "student_name",
+          "expression": "STUDENT",
+          "type": "varchar"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "integer"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "double"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        },
+        {
+          "name": "total_obtained",
+          "expression": "OBTAINED",
+          "type": "double"
+        },
+        {
+          "name": "total_marks",
+          "expression": "TOTAL",
+          "type": "double"
+        },
+        {
+          "name": "source_subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "final_status",
+          "expression": "STATUS",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "head_office_results",
+      "properties": {
+        "description": "Head Office formatted teacher performance records."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "HOF_FRMT"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "Year",
+          "type": "double"
+        },
+        {
+          "name": "class_section",
+          "expression": "\"CLASS/SECTION\"",
+          "type": "varchar"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "integer"
+        },
+        {
+          "name": "pass_percentage",
+          "expression": "\"PASS%\"",
+          "type": "varchar"
+        },
+        {
+          "name": "board_pass_percentage",
+          "expression": "\"PASS% OF BOARD\"",
+          "type": "varchar"
+        },
+        {
+          "name": "position",
+          "expression": "Position",
+          "type": "integer"
+        },
+        {
+          "name": "total_positions",
+          "expression": "TOTAL_POSITIONS",
+          "type": "integer"
+        },
+        {
+          "name": "workload",
+          "expression": "\"WORK LOAD\"",
+          "type": "integer"
+        },
+        {
+          "name": "class_average",
+          "expression": "\"CLASS AVG\"",
+          "type": "double"
+        },
+        {
+          "name": "above_70_count",
+          "expression": "\"ABOVE 70 COUNT\"",
+          "type": "integer"
+        },
+        {
+          "name": "below_70_count",
+          "expression": "\"BELOW 70% COUNT\"",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "house_attendance",
+      "properties": {
+        "description": "Daily student attendance events grouped by live campus and house."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "House_Attendance_Daily"
+      },
+      "primaryKey": "attendance_id",
+      "columns": [
+        {
+          "name": "attendance_id",
+          "expression": "AttID",
+          "type": "integer"
+        },
+        {
+          "name": "campus",
+          "expression": "School",
+          "type": "varchar"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "varchar"
+        },
+        {
+          "name": "house",
+          "expression": "House",
+          "type": "varchar"
+        },
+        {
+          "name": "attendance_date",
+          "expression": "AttDate",
+          "type": "date"
+        },
+        {
+          "name": "status",
+          "expression": "Status",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "internal_teacher_results",
+      "properties": {
+        "description": "Group-wise internal examination teacher performance."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "INTERNAL_EXAM_GROUP_WISE_PERFORMANCE_VIEW"
+      },
+      "primaryKey": "id",
+      "columns": [
+        {
+          "name": "id",
+          "expression": "ID",
+          "type": "integer"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        },
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "integer"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "\"TEACHER NAME\"",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "integer"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "integer"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "group_name",
+          "expression": "\"GROUP\"",
+          "type": "varchar"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "integer"
+        },
+        {
+          "name": "absent",
+          "expression": "ABSENT",
+          "type": "integer"
+        },
+        {
+          "name": "passed",
+          "expression": "PASS",
+          "type": "integer"
+        },
+        {
+          "name": "grade_a_plus",
+          "expression": "\"A+\"",
+          "type": "integer"
+        },
+        {
+          "name": "grade_a",
+          "expression": "A",
+          "type": "integer"
+        },
+        {
+          "name": "grade_b",
+          "expression": "B",
+          "type": "integer"
+        },
+        {
+          "name": "grade_c",
+          "expression": "C",
+          "type": "integer"
+        },
+        {
+          "name": "grade_d",
+          "expression": "D",
+          "type": "integer"
+        },
+        {
+          "name": "grade_e",
+          "expression": "E",
+          "type": "integer"
+        },
+        {
+          "name": "grade_f",
+          "expression": "F",
+          "type": "integer"
+        },
+        {
+          "name": "class_percentage",
+          "expression": "\"CLASS%\"",
+          "type": "double"
+        },
+        {
+          "name": "class_average",
+          "expression": "CLASS_AVG",
+          "type": "double"
+        },
+        {
+          "name": "below_70",
+          "expression": "\"BELOW 70%\"",
+          "type": "integer"
+        },
+        {
+          "name": "above_70",
+          "expression": "\"ABOVE 70%\"",
+          "type": "integer"
+        }
+      ]
+    },
+    {
+      "name": "practical_marks",
+      "properties": {
+        "description": "Subject-level practical examination marks."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "PRAC"
+      },
+      "primaryKey": "id",
+      "columns": [
+        {
+          "name": "id",
+          "expression": "ID",
+          "type": "integer"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "obtained_marks",
+          "expression": "OBTAINED",
+          "type": "double"
+        },
+        {
+          "name": "total_marks",
+          "expression": "TOTAL",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        },
+        {
+          "name": "grade",
+          "expression": "GRADE",
+          "type": "varchar"
+        },
+        {
+          "name": "result_status",
+          "expression": "STATUS",
+          "type": "varchar"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "double"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "practical_teacher_results",
+      "properties": {
+        "description": "Teacher-level practical result summaries and percentage bands."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "TR2_Prac"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "Year",
+          "type": "double"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "strength",
+          "expression": "STRENGTH",
+          "type": "integer"
+        },
+        {
+          "name": "count_90_100",
+          "expression": "Count_90_100",
+          "type": "integer"
+        },
+        {
+          "name": "count_80_90",
+          "expression": "Count_80_90",
+          "type": "integer"
+        },
+        {
+          "name": "count_70_80",
+          "expression": "Count_70_80",
+          "type": "integer"
+        },
+        {
+          "name": "count_60_70",
+          "expression": "Count_60_70",
+          "type": "integer"
+        },
+        {
+          "name": "count_50_60",
+          "expression": "Count_50_60",
+          "type": "integer"
+        },
+        {
+          "name": "count_40_50",
+          "expression": "Count_40_50",
+          "type": "integer"
+        },
+        {
+          "name": "count_0_39",
+          "expression": "Count_0_39",
+          "type": "integer"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "integer"
+        },
+        {
+          "name": "passed",
+          "expression": "PASSED",
+          "type": "integer"
+        },
+        {
+          "name": "pass_percentage",
+          "expression": "\"PASS%\"",
+          "type": "double"
+        },
+        {
+          "name": "class_average",
+          "expression": "\"CLASS AVG\"",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "name": "student_enrollment",
+      "properties": {
+        "description": "Current student enrollment records for internal examinations, scoped by live campus, class, section, year, and house."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "STUDENTS_ROLL_INTERNAL_EXAM"
+      },
+      "primaryKey": "id",
+      "columns": [
+        {
+          "name": "id",
+          "type": "integer"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "varchar"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "varchar"
+        },
+        {
+          "name": "student_name",
+          "expression": "STUDENT",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "varchar"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGORY",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "integer"
+        },
+        {
+          "name": "house",
+          "expression": "HOUSE",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAM",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "student_result_card",
+      "properties": {
+        "description": "Subject-level internal examination result card for a locally identified student."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "INTERNAL_STUDENT_RESULT_CARD_VIEW"
+      },
+      "columns": [
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "roll_number",
+          "expression": "ROLLNO",
+          "type": "varchar"
+        },
+        {
+          "name": "student_reference",
+          "expression": "SMSNO",
+          "type": "varchar"
+        },
+        {
+          "name": "student_name",
+          "expression": "\"STUDENT NAME\"",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "varchar"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "integer"
+        },
+        {
+          "name": "house",
+          "expression": "HOUSE",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAM",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "total_marks",
+          "expression": "TOTAL",
+          "type": "integer"
+        },
+        {
+          "name": "obtained_marks",
+          "expression": "OBTAINED",
+          "type": "decimal"
+        },
+        {
+          "name": "percentage",
+          "expression": "PERCENTAGE",
+          "type": "decimal"
+        },
+        {
+          "name": "grade",
+          "expression": "GRADE",
+          "type": "varchar"
+        },
+        {
+          "name": "result_status",
+          "expression": "STATUS",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "teacher_board_middle",
+      "properties": {
+        "description": "Teacher overall percentage split into Board and Middle categories."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "vTeacher_sum_per_BOARD_MIDDLE"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "sum_obtained",
+          "expression": "SumObtained",
+          "type": "double"
+        },
+        {
+          "name": "sum_total",
+          "expression": "SumTotal",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "name": "teacher_career",
+      "properties": {
+        "description": "Teacher career",
+        "ranking": null,
+        "workload": null,
+        "and above or below 70 summaries.": null
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "ALL_COMBINED"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "varchar"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "varchar"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "Year",
+          "type": "varchar"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "strength",
+          "expression": "STRENGTH",
+          "type": "varchar"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "varchar"
+        },
+        {
+          "name": "passed",
+          "expression": "PASSED",
+          "type": "varchar"
+        },
+        {
+          "name": "pass_percentage",
+          "expression": "\"PASS%\"",
+          "type": "varchar"
+        },
+        {
+          "name": "class_average",
+          "expression": "\"CLASS AVG\"",
+          "type": "varchar"
+        },
+        {
+          "name": "above_70",
+          "expression": "Above_70",
+          "type": "varchar"
+        },
+        {
+          "name": "below_70",
+          "expression": "Below_70",
+          "type": "varchar"
+        },
+        {
+          "name": "position",
+          "expression": "Position",
+          "type": "varchar"
+        },
+        {
+          "name": "total_positions",
+          "expression": "TOTAL_POSITIONS",
+          "type": "varchar"
+        },
+        {
+          "name": "workload",
+          "expression": "WL",
+          "type": "varchar"
+        }
+      ]
+    },
+    {
+      "name": "teacher_overall",
+      "properties": {
+        "description": "Teacher overall obtained",
+        "total": null,
+        "and percentage by class and subject.": null
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "vTeacher_sum_per"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "YEAR",
+          "type": "double"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "sum_obtained",
+          "expression": "SumObtained",
+          "type": "double"
+        },
+        {
+          "name": "sum_total",
+          "expression": "SumTotal",
+          "type": "double"
+        },
+        {
+          "name": "percentage",
+          "expression": "\"%\"",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "name": "teacher_results",
+      "properties": {
+        "description": "Teacher and subject performance summaries used for class, subject, and campus-level academic analytics."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "TR_ALL"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "Year",
+          "type": "double"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "strength",
+          "expression": "STRENGTH",
+          "type": "integer"
+        },
+        {
+          "name": "count_90_100",
+          "expression": "Count_90_100",
+          "type": "integer"
+        },
+        {
+          "name": "count_80_90",
+          "expression": "Count_80_90",
+          "type": "integer"
+        },
+        {
+          "name": "count_70_80",
+          "expression": "Count_70_80",
+          "type": "integer"
+        },
+        {
+          "name": "count_60_70",
+          "expression": "Count_60_70",
+          "type": "integer"
+        },
+        {
+          "name": "count_50_60",
+          "expression": "Count_50_60",
+          "type": "integer"
+        },
+        {
+          "name": "count_40_50",
+          "expression": "Count_40_50",
+          "type": "integer"
+        },
+        {
+          "name": "count_0_39",
+          "expression": "Count_0_39",
+          "type": "integer"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "integer"
+        },
+        {
+          "name": "passed",
+          "expression": "PASSED",
+          "type": "integer"
+        },
+        {
+          "name": "pass_percentage",
+          "expression": "\"PASS%\"",
+          "type": "double"
+        },
+        {
+          "name": "class_average",
+          "expression": "\"CLASS AVG\"",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "name": "theory_teacher_results",
+      "properties": {
+        "description": "Teacher-level theory result summaries and percentage bands."
+      },
+      "tableReference": {
+        "schema": "dbo",
+        "table": "TR2_Theory"
+      },
+      "columns": [
+        {
+          "name": "teacher_id",
+          "expression": "EID",
+          "type": "double"
+        },
+        {
+          "name": "teacher_name",
+          "expression": "NAME",
+          "type": "varchar"
+        },
+        {
+          "name": "campus",
+          "expression": "SCHOOL",
+          "type": "varchar"
+        },
+        {
+          "name": "exam_type",
+          "expression": "EXAMTYPE",
+          "type": "varchar"
+        },
+        {
+          "name": "subject",
+          "expression": "SUBJECT",
+          "type": "varchar"
+        },
+        {
+          "name": "class_level",
+          "expression": "CLASS",
+          "type": "double"
+        },
+        {
+          "name": "section",
+          "expression": "SECTION",
+          "type": "varchar"
+        },
+        {
+          "name": "school_year",
+          "expression": "Year",
+          "type": "double"
+        },
+        {
+          "name": "category",
+          "expression": "CATEGROY",
+          "type": "varchar"
+        },
+        {
+          "name": "strength",
+          "expression": "STRENGTH",
+          "type": "integer"
+        },
+        {
+          "name": "count_90_100",
+          "expression": "Count_90_100",
+          "type": "integer"
+        },
+        {
+          "name": "count_80_90",
+          "expression": "Count_80_90",
+          "type": "integer"
+        },
+        {
+          "name": "count_70_80",
+          "expression": "Count_70_80",
+          "type": "integer"
+        },
+        {
+          "name": "count_60_70",
+          "expression": "Count_60_70",
+          "type": "integer"
+        },
+        {
+          "name": "count_50_60",
+          "expression": "Count_50_60",
+          "type": "integer"
+        },
+        {
+          "name": "count_40_50",
+          "expression": "Count_40_50",
+          "type": "integer"
+        },
+        {
+          "name": "count_0_39",
+          "expression": "Count_0_39",
+          "type": "integer"
+        },
+        {
+          "name": "appeared",
+          "expression": "APPEARED",
+          "type": "integer"
+        },
+        {
+          "name": "passed",
+          "expression": "PASSED",
+          "type": "integer"
+        },
+        {
+          "name": "pass_percentage",
+          "expression": "\"PASS%\"",
+          "type": "double"
+        },
+        {
+          "name": "class_average",
+          "expression": "\"CLASS AVG\"",
+          "type": "double"
+        }
+      ]
+    }
+  ],
+  "relationships": [],
+  "views": [],
+  "cubes": [],
+  "dataSource": "mssql",
+  "layoutVersion": 1
+}
